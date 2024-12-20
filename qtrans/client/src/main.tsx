@@ -8,6 +8,7 @@ import { RouterProvider } from "@tanstack/react-router";
 import { router } from "src/routes/index";
 import { FC } from "react";
 import { ErrorPage, NotFound } from "src/components";
+import { SettingsContextProvider } from "./contexts";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,6 +34,8 @@ const AppWrapper: FC = () => {
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <QueryClientProvider client={queryClient}>
-    <AppWrapper />
+    <SettingsContextProvider>
+      <AppWrapper />
+    </SettingsContextProvider>
   </QueryClientProvider>
 );

@@ -4,7 +4,7 @@
         "module": "CommonJS",
         "lib": ["ES6", "DOM"],
         "outDir": "./dist",
-        "rootDir": "./src",
+        "rootDir": "src",
         "strict": true,
         "esModuleInterop": true,
         "skipLibCheck": true,

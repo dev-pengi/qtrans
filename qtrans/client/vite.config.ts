@@ -7,13 +7,24 @@ export default defineConfig({
   plugins: [
     react(),
     generateIndexPlugin({
-      dirs: ["src/components", "src/hooks"],
+      dirs: [
+        "src/components",
+        "src/contexts",
+        "src/hooks",
+        "src/types",
+        "src/api",
+      ],
+      excludes: ["src/components/styles/*"],
     }),
   ],
   build: {
     outDir: "build",
   },
-  server: { hmr: true },
+  server: {
+    hmr: {
+      overlay: true,
+    },
+  },
   base: "./",
   resolve: {
     alias: {

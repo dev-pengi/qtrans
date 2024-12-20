@@ -47,8 +47,8 @@ export default {
         danger: "#E23636",
         secondary: "#669dd4",
         accent: "#1e8bf7",
-        background: "#161618",
-        "background-light": "#202127",
+        background: "#202127",
+        "background-light": "#161618",
         gray: {
           1: "#dbdbdb",
           2: "#d2d3d4",

@@ -8,7 +8,12 @@ import translationsRouter from "./routes/translations";
 import swaggerUi from "swagger-ui-express";
 import { errorHandler, notFound } from "./middlewares/error.middleware";
 import yaml from "yaml";
-import { initLanguagesConfig, mutableLanguagesConfig } from "./config";
+import {
+  getDefaultLanguage,
+  getLanguages,
+  initLanguagesConfig,
+  mutableLanguagesConfig,
+} from "./config";
 import { createProxyMiddleware } from "http-proxy-middleware";
 
 dotenv.config();
@@ -162,6 +167,29 @@ async function startServer() {
   );
   initPort(app, config.port);
 
+  app.use(express.json());
+  app.use("/api/translations", translationsRouter);
+
+  if (isDev) {
+    const swaggerSpec = yaml.parse(
+      fs.readFileSync("./src/api/swagger.yaml", "utf8")
+    );
+    app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  }
+
+  app.get("/api/settings", (_req, res) => {
+    res.json({
+      name: config.name,
+      port: config.port,
+      languages: getLanguages(),
+      defaultLanguage: getDefaultLanguage(),
+    });
+  });
+
+  app.get("/api", (_req, res) => {
+    res.json({ message: "API is working lol" });
+  });
+
   if (isDev) {
     app.use(
       "/",
@@ -180,25 +208,7 @@ async function startServer() {
       res.sendFile(toolClientSource);
     });
   }
-  app.use(express.json());
 
-  app.use(express.json());
-  app.use("/api/translations", translationsRouter);
-
-  if (isDev) {
-    const swaggerSpec = yaml.parse(
-      fs.readFileSync("./src/api/swagger.yaml", "utf8")
-    );
-    app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-  }
-
-  app.get("/config", (_req, res) => {
-    res.json(config);
-  });
-
-  app.get("/api", (_req, res) => {
-    res.json({ message: "API is working lol" });
-  });
   app.use(notFound);
   app.use(errorHandler);
 }
