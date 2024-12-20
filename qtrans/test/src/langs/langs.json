@@ -1,9 +1,0 @@
-{
-  "languages": ["en"],
-  "defaultLanguage": "en",
-  "translations": {
-    "delete": {
-      "en": "Delete"
-    }
-  }
-}

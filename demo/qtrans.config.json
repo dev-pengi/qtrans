@@ -1,0 +1,6 @@
+{
+  "name": "qtrans",
+  "location": "src/langs",
+  "port": 6757,
+  "typeSafe": true
+}
