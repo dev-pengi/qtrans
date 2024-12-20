@@ -24,10 +24,7 @@ function App() {
       setIsLoading(false);
     };
 
-    //the server is running locally therefore the request will resolve fast so i added this to show a loading style
-    setTimeout(() => {
       handleFetchConfig();
-    }, 1000);
   }, []);
 
   if (isError) {

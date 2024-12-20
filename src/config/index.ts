@@ -1,3 +1,11 @@
+import path from "path";
+import * as fs from "fs";
+
+export let rootDir: string | undefined = undefined;
+export let updateRootDir = (dir: string) => {
+  rootDir = dir;
+};
+
 export type TranslationSchema = {
   languages: string[];
   defaultLanguage: string;
@@ -8,10 +16,42 @@ export type TranslationSchema = {
   };
 };
 
+export let config = {
+  port: 6757,
+  location: "langs",
+  name: "qtrans",
+};
+
+export let updateConfig = (
+  callback: (prev: typeof config) => void | typeof config
+) => {
+  config = callback(config) || config;
+};
+
 export let mutableLanguagesConfig: TranslationSchema = {
   languages: ["en"],
   defaultLanguage: "en",
   translations: {},
+};
+
+export let updateMutableLanguagesConfig = (
+  callback: (
+    prev: typeof mutableLanguagesConfig
+  ) => void | typeof mutableLanguagesConfig
+) => {
+  mutableLanguagesConfig =
+    callback(mutableLanguagesConfig) || mutableLanguagesConfig;
+
+  if (rootDir && config.location) {
+    const dirPath = path.join(rootDir, config.location);
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath, { recursive: true });
+    }
+    fs.writeFileSync(
+      path.join(dirPath, "langs.json"),
+      JSON.stringify(mutableLanguagesConfig, null, 2)
+    );
+  }
 };
 
 export const initLanguagesConfig = (config: any) => {
@@ -30,57 +70,6 @@ export const getTranslationByKey = (key: string) => {
   return mutableLanguagesConfig.translations[key];
 };
 
-export const addTranslation = (
-  key: string,
-  translation: { [key: string]: string }
-) => {
-  const { translations } = mutableLanguagesConfig;
-  mutableLanguagesConfig = {
-    ...mutableLanguagesConfig,
-    translations: {
-      ...translations,
-      [key]: translation,
-    },
-  };
-};
-
-export const removeTranslation = (key: string) => {
-  const { translations } = mutableLanguagesConfig;
-  delete translations[key];
-  mutableLanguagesConfig = {
-    ...mutableLanguagesConfig,
-    translations,
-  };
-};
-
-export const updateTranslation = (
-  key: string,
-  translation: { [key: string]: string }
-) => {
-  const { translations } = mutableLanguagesConfig;
-  const existingTranslation = translations[key] || {};
-
-  mutableLanguagesConfig = {
-    ...mutableLanguagesConfig,
-    translations: {
-      ...translations,
-      [key]: {
-        ...existingTranslation,
-        ...translation,
-      },
-    },
-  };
-};
-export const removeLanguage = (language: string) => {
-  const { translations, languages } = mutableLanguagesConfig;
-  delete translations[language];
-  mutableLanguagesConfig = {
-    ...mutableLanguagesConfig,
-    translations,
-    languages: languages.filter((lang) => lang !== language),
-  };
-};
-
 export const getLanguages = () => {
   return mutableLanguagesConfig.languages;
 };
@@ -88,21 +77,88 @@ export const getLanguages = () => {
 export const getDefaultLanguage = () => {
   return mutableLanguagesConfig.defaultLanguage;
 };
+export const addTranslation = (
+  key: string,
+  value: { [key: string]: string }
+): { key: string; value: { [key: string]: string } } => {
+  const { translations } = mutableLanguagesConfig;
+  const newTranslations = {
+    ...translations,
+    [key]: value,
+  };
+
+  updateMutableLanguagesConfig((prev) => ({
+    ...prev,
+    translations: newTranslations,
+  }));
+
+  return { key, value: newTranslations[key] };
+};
+
+export const updateTranslation = (
+  key: string,
+  value: { [key: string]: string }
+): { key: string; value: { [key: string]: string } } => {
+  const { translations } = mutableLanguagesConfig;
+  const existingTranslation = translations[key] || {};
+  const updatedTranslation = {
+    ...existingTranslation,
+    ...value,
+  };
+
+  updateMutableLanguagesConfig((prev) => ({
+    ...prev,
+    translations: {
+      ...translations,
+      [key]: updatedTranslation,
+    },
+  }));
+
+  return { key, value: updatedTranslation };
+};
+
+export const removeTranslation = (key: string) => {
+  const { translations } = mutableLanguagesConfig;
+  updateMutableLanguagesConfig((prev) => {
+    const newTranslations = { ...translations };
+    delete newTranslations[key];
+    return {
+      ...prev,
+      translations: newTranslations,
+    };
+  });
+};
+
+export const removeLanguage = (language: string) => {
+  const { translations, languages } = mutableLanguagesConfig;
+  updateMutableLanguagesConfig((prev) => {
+    const newTranslations = { ...translations };
+    delete newTranslations[language];
+    return {
+      ...prev,
+      translations: newTranslations,
+      languages: languages.filter((lang) => lang !== language),
+    };
+  });
+};
 
 export const addLanguage = (language: string) => {
   const { translations, languages } = mutableLanguagesConfig;
-  mutableLanguagesConfig = {
-    ...mutableLanguagesConfig,
+  updateMutableLanguagesConfig((prev) => ({
+    ...prev,
     translations: {
       ...translations,
       [language]: {},
     },
     languages: [...languages, language],
-  };
+  }));
 };
 
 export const setDefaultLanguage = (language: string) => {
   if (mutableLanguagesConfig.languages.includes(language)) {
-    mutableLanguagesConfig.defaultLanguage = language;
+    updateMutableLanguagesConfig((prev) => ({
+      ...prev,
+      defaultLanguage: language,
+    }));
   }
 };

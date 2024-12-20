@@ -13,6 +13,7 @@ export default defineConfig({
         "src/hooks",
         "src/types",
         "src/api",
+        "src/constants",
       ],
       excludes: ["src/components/styles/*"],
     }),

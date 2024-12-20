@@ -15,7 +15,7 @@ export const fetchAllTranslations = asyncHandler(
     res.json(
       Object.entries(translations).map(([key, value]) => ({
         key,
-        translations: value,
+        value: value,
       }))
     );
   }
@@ -31,7 +31,7 @@ export const getTranslation = asyncHandler(
 
     res.json({
       key: req.params.translationKey,
-      translations: translation,
+      value: translation,
     });
   }
 );
@@ -56,8 +56,8 @@ export const createTranslation = asyncHandler(
       return;
     }
 
-    addTranslation(req.body.key, req.body.translation);
-    res.json({ message: "Translation created" });
+    const newTranslation = addTranslation(req.body.key, req.body.translation);
+    res.json(newTranslation);
   }
 );
 

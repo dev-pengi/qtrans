@@ -8,10 +8,14 @@ import swaggerUi from "swagger-ui-express";
 import { errorHandler, notFound } from "./middlewares/error.middleware";
 import yaml from "yaml";
 import {
+  config,
   getDefaultLanguage,
   getLanguages,
   initLanguagesConfig,
   mutableLanguagesConfig,
+  rootDir,
+  updateConfig,
+  updateRootDir,
 } from "./config";
 import { initPort } from "./utils/port.util";
 import { createProxyMiddleware } from "http-proxy-middleware";
@@ -19,18 +23,13 @@ import { createProxyMiddleware } from "http-proxy-middleware";
 dotenv.config();
 
 export default async function startServer(isDev: boolean = false) {
-  const rootDir = isDev
-    ? path.join(__dirname, `../${process.env.TEST_DIR}`)
-    : process.cwd();
-  console.log(rootDir);
+  updateRootDir(
+    isDev ? path.join(__dirname, `../${process.env.TEST_DIR}`) : process.cwd()
+  );
+
+  console.log("rootDir", rootDir);
 
   let configFile = {};
-
-  let config: {
-    name?: string;
-    location?: string;
-    port?: number;
-  } = {};
 
   if (rootDir && fs.existsSync(path.join(rootDir, "qtrans.config.json"))) {
     try {
@@ -53,7 +52,7 @@ export default async function startServer(isDev: boolean = false) {
       }
 
       configFile = JSON.parse(rawConfigFile);
-      config = JSON.parse(rawConfigFile);
+      updateConfig(() => JSON.parse(rawConfigFile));
     } catch (error) {
       console.log(
         kleur.red(

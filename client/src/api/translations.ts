@@ -34,3 +34,13 @@ export const deleteTranslation = async (key: string) => {
     method: "DELETE",
   });
 };
+
+export const generateTranslations = async (prompt: {
+  key: string;
+  languages: string[];
+}): Promise<TranslationValue> => {
+  return handleFetch(`/api/auto/translation/generate`, {
+    method: "POST",
+    data: prompt,
+  });
+};

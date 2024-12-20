@@ -32,7 +32,7 @@ const SearchInput: FC<Partial<SearchInputProps>> = ({
         value={value}
         type="text"
         autoFocus={autoFocus}
-        className={`py-[9px] text-[15px] w-full rounded-md bg-white/20 placeholder:text-gray-3 pl-10`}
+        className={`py-[9px] text-[15px] w-full rounded-md bg-white/10 placeholder:text-gray-3 pl-10`}
         placeholder={placeholder}
       />
     </div>

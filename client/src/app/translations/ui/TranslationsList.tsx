@@ -1,8 +1,8 @@
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FC } from "react";
-import { ActivityIndicator } from "src/components";
+import { ActivityIndicator, SearchInput } from "src/components";
 import { useTranslations } from "src/hooks";
+import NewTranslation from "../components/NewTranslation";
+import TranslationCard from "../components/TranslationCard";
 
 const TranslationsList: FC = () => {
   const { fetchTranslations } = useTranslations();
@@ -13,28 +13,25 @@ const TranslationsList: FC = () => {
   if (isLoadingTranslations) {
     return (
       <div className="flex justify-center items-center h-96">
-        <ActivityIndicator size={16}/>
+        <ActivityIndicator size={16} />
+      </div>
+    );
+  }
+  if (!translations || typeof translations !== "object") {
+    return (
+      <div className="flex justify-center items-center flex-col py-40">
+        <p className="text-gray-1 text-3xl py-4">No translations found</p>
+        <NewTranslation />
       </div>
     );
   }
 
   return (
     <div>
-      <div className="flex flex-col gap-4">
+      <SearchInput placeholder="search for translations" />
+      <div className="flex flex-col gap-4 mt-12">
         {translations?.map((translation) => (
-          <div
-            key={translation.key}
-            className="py-3 px-6 bg-background-light flex items-center justify-between cursor-pointer rounded-md border border-solid shadow-sm border-background-light hover:border-secondary duration-100"
-          >
-            <div className="flex gap-4">
-              <p className="text-gray-1 capitalize">
-                {translation.key.split("_").join(" ")}
-              </p>
-            </div>
-            <button className="text-secondary">
-              <FontAwesomeIcon icon={faAngleDown} />
-            </button>
-          </div>
+          <TranslationCard key={translation.key} translation={translation} />
         ))}
       </div>
     </div>

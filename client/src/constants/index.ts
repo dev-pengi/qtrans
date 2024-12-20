@@ -13,5 +13,4 @@
 
 
 
-export * from './useModalRef.tsx';
-export { default as useTranslations } from './useTranslations.tsx';
+export { default as languagesCodeMap } from './languagesCodeMap.ts';

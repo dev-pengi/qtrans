@@ -4,7 +4,5 @@ export type TranslationValue = {
 
 export type Translation = {
   key: string;
-  value: {
-    [lang: string]: string;
-  };
+  value: TranslationValue;
 };

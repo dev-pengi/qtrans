@@ -3,5 +3,30 @@
     "en"
   ],
   "defaultLanguage": "en",
-  "translations": {}
+  "translations": {
+    "user_actions_create": {
+      "en": "Create User"
+    },
+    "user_actions_delete": {
+      "en": "Delete User"
+    },
+    "user_actions_update": {
+      "en": "Update User"
+    },
+    "user_actions_delete_success": {
+      "en": "User has been successfully deleted"
+    },
+    "user_actions_delete_error": {
+      "en": "Error while deleting the user"
+    },
+    "user_actions_create_success": {
+      "en": "User has been successfully created"
+    },
+    "user_actions_create_error": {
+      "en": "Error while creating user"
+    },
+    "user_actions_update_success": {
+      "en": "User has been successfully updated"
+    }
+  }
 }
