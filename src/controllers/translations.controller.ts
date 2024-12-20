@@ -1,12 +1,13 @@
 import asyncHandler from "express-async-handler";
 import { Request, Response } from "express";
-import { createTranslationSchema } from "../validators/translation.validator";
+import { createTranslationSchema, updateTranslationSchema } from "../validators/translation.validator";
 import {
   getAllTranslations,
   addTranslation,
   getLanguages,
   getTranslationByKey,
   removeTranslation,
+  modifyTranslation,
 } from "../config";
 
 export const fetchAllTranslations = asyncHandler(
@@ -64,9 +65,14 @@ export const createTranslation = asyncHandler(
 export const updateTranslation = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
     const validLanguages = getLanguages();
-    const defaultLanguage = validLanguages[0];
 
-    const schema = createTranslationSchema(validLanguages, defaultLanguage);
+    const translation = getTranslationByKey(req.params.translationKey);
+    if (!translation) {
+      res.status(404).json({ error: "Translation not found" });
+      return;
+    }
+
+    const schema = updateTranslationSchema(validLanguages);
 
     const { error } = schema.validate(req.body);
     if (error) {
@@ -74,8 +80,11 @@ export const updateTranslation = asyncHandler(
       return;
     }
 
-    addTranslation(req.body.key, req.body.translation);
-    res.json({ message: "Translation updated" });
+    const newTranslation = modifyTranslation(
+      req.params.translationKey,
+      req.body.translation
+    );
+    res.json(newTranslation);
   }
 );
 

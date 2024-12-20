@@ -54,25 +54,21 @@ const useTranslations = () => {
 
   const modifyTranslation = () => {
     return useMutation<
-      null,
+      Translation,
       Error,
       { key: string; updatedTranslation: TranslationValue }
     >({
       mutationFn: async ({ key, updatedTranslation }) => {
-        await updateTranslation(key, updatedTranslation);
-        return null; // explicitly return null to match the expected type
+        const updated = await updateTranslation(key, updatedTranslation);
+        return updated; // return the updated translation
       },
-      onSuccess: (_, { key, updatedTranslation }) => {
+      onSuccess: (data, { key }) => {
         queryClient.setQueryData<Translation[]>(["translations"], (old) =>
           old?.map((translation) =>
-            translation.key === key
-              ? { ...translation, ...updatedTranslation }
-              : translation
+            translation.key === key ? data : translation
           )
         );
-        queryClient.setQueryData<Translation>(["translations", key], (old) =>
-          old ? { ...old, ...updatedTranslation } : old
-        );
+        queryClient.setQueryData<Translation>(["translations", key], data);
       },
     });
   };

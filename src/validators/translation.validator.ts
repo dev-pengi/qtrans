@@ -24,9 +24,7 @@ export const createTranslationSchema = (
   });
 };
 
-export const updateTranslationSchema = (
-  availableLanguages: string[],
-) => {
+export const updateTranslationSchema = (availableLanguages: string[]) => {
   return Joi.object({
     key: Joi.string().optional(),
     translation: Joi.object()

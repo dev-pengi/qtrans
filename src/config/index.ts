@@ -95,7 +95,7 @@ export const addTranslation = (
   return { key, value: newTranslations[key] };
 };
 
-export const updateTranslation = (
+export const modifyTranslation = (
   key: string,
   value: { [key: string]: string }
 ): { key: string; value: { [key: string]: string } } => {

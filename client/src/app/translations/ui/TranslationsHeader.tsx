@@ -18,8 +18,11 @@ const TranslationsHeader: FC = () => {
       </div>
       <p className="text-sm mt-4 ml-2 text-gray-2">
         the translation manager for {config.name} -{" "}
-        <span className="text-accent">{config.languages.length} language</span>
-        {config.languages.length > 1 ? "s" : ""} configured
+        <span className="text-accent">
+          {config.languages.length} language
+          {config.languages.length > 1 ? "s" : ""}
+        </span>{" "}
+        configured
       </p>
     </div>
   );
