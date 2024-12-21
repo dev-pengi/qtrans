@@ -13,7 +13,6 @@ import {
   updateRootDir,
 } from "./config";
 import { initPort } from "./utils/port.util";
-import { createProxyMiddleware } from "http-proxy-middleware";
 import settingsRouter from "./routes/settings";
 import { checkConfigFile } from "./utils/validate.util";
 
@@ -97,6 +96,7 @@ export default async function startServer(isDev: boolean = false) {
   });
 
   if (isDev) {
+    const { createProxyMiddleware } = await import("http-proxy-middleware");
     app.use(
       "/",
       createProxyMiddleware({
