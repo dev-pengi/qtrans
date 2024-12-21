@@ -1,7 +1,7 @@
 {
   "name": "qtrans",
   "description": "Q trans, Installer for Qareeb translation manager",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "license": "MIT",
   "main": "dist/server.js",
   "bin": {
