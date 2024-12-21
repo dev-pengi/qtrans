@@ -18,7 +18,6 @@ interface TranslationCardProps {
 const TranslationCard: FC<TranslationCardProps> = ({ translation }) => {
   const { config } = useSettingsContext();
 
-  console.log(translation);
   const { defaultLanguage } = config;
 
   const emptyFields = useMemo(() => {

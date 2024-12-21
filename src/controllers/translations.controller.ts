@@ -153,8 +153,6 @@ export const generateTranslations = asyncHandler(
       if (data.error || !data.candidates || !data.candidates[0]) {
         throw new Error(`Couldn't generate translations ${data.error}`);
       }
-      console.log(data.candidates[0].content);
-
       const jsonData = JSON.parse(data.candidates[0].content.parts[0].text);
 
       res.status(200).send(jsonData);

@@ -31,8 +31,6 @@ const EditTranslation: FC<EditTranslationProps> = ({
       return acc;
     }, {} as { [lang: string]: string });
 
-  console.log(translation);
-
   const [languagesValues, setLanguagesValues] = useState(resetInputs());
   const [translationKey, setTranslationKey] = useState(translation.key);
 
@@ -58,7 +56,6 @@ const EditTranslation: FC<EditTranslationProps> = ({
     const promptData = {
       key: translationKey,
       languages: languages.map((lang) => {
-        console.log(`${lang.toLowerCase()}-${languagesCodeMap[lang].Name}`);
         return `${lang.toLowerCase()}-${languagesCodeMap[lang].Name}`;
       }),
     };

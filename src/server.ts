@@ -119,7 +119,6 @@ export default async function startServer(isDev: boolean = false) {
   app.use(errorHandler);
 }
 
-console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === "development") {
   startServer(true);
 }
