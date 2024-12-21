@@ -4,9 +4,7 @@ import express from "express";
 import * as fs from "fs";
 import kleur from "kleur";
 import translationsRouter from "./routes/translations";
-import swaggerUi from "swagger-ui-express";
 import { errorHandler, notFound } from "./middlewares/error.middleware";
-import yaml from "yaml";
 import {
   config,
   initLanguagesConfig,
@@ -93,13 +91,6 @@ export default async function startServer(isDev: boolean = false) {
   app.use(express.json());
   app.use("/api/translations", translationsRouter);
   app.use("/api/settings", settingsRouter);
-
-  if (isDev) {
-    const swaggerSpec = yaml.parse(
-      fs.readFileSync("./src/api/swagger.yaml", "utf8")
-    );
-    app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-  }
 
   app.get("/api", (_req, res) => {
     res.json({ message: "API is working lol" });
