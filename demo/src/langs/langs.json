@@ -1,14 +1,8 @@
 {
   "languages": [
-    "aa",
-    "ab",
-    "ar",
-    "en",
-    "fr",
-    "hy",
-    "my"
+    "en"
   ],
-  "defaultLanguage": "ar",
+  "defaultLanguage": "en",
   "translations": {
     "user_actions_create": {
       "en": "Create User"
