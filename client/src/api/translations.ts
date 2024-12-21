@@ -39,7 +39,7 @@ export const generateTranslations = async (prompt: {
   key: string;
   languages: string[];
 }): Promise<TranslationValue> => {
-  return handleFetch(`/api/auto/translation/generate`, {
+  return handleFetch(`/api/translations/ai/generate`, {
     method: "POST",
     data: prompt,
   });

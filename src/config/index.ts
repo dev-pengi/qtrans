@@ -1,5 +1,8 @@
+import dotenv from "dotenv";
 import path from "path";
 import * as fs from "fs";
+import kleur from "kleur";
+import { Config } from "../types";
 
 export let rootDir: string | undefined = undefined;
 export let updateRootDir = (dir: string) => {
@@ -16,16 +19,54 @@ export type TranslationSchema = {
   };
 };
 
-export let config = {
+export let config: Config = {
   port: 6757,
   location: "langs",
   name: "qtrans",
 };
 
+const replaceSecrets = (obj: any): any => {
+  if (!rootDir) return obj;
+  const envFilePath = path.join(rootDir, ".env");
+  const checkEnvFile = fs.existsSync(envFilePath);
+
+  if (!checkEnvFile) {
+    console.log(
+      kleur.bgRed(
+        ".env file was not found, the secrets in the config will not be mapped"
+      )
+    );
+    return obj;
+  }
+  const envConfig = dotenv.parse(
+    fs.readFileSync(envFilePath, { encoding: "utf-8" })
+  );
+
+  if (typeof obj === "string") {
+    const match = obj.match(/^ENV\.{{(.+?)}}$/);
+    if (match) {
+      const secretName = match[1];
+      return envConfig[secretName] || obj;
+    }
+    return obj;
+  } else if (Array.isArray(obj)) {
+    return obj.map(replaceSecrets);
+  } else if (typeof obj === "object" && obj !== null) {
+    const newObj: any = {};
+    for (const key in obj) {
+      newObj[key] = replaceSecrets(obj[key]);
+    }
+    return newObj;
+  }
+  return obj;
+};
+
 export let updateConfig = (
   callback: (prev: typeof config) => void | typeof config
 ) => {
-  config = callback(config) || config;
+  let newConfig = callback(config) || config;
+  newConfig = replaceSecrets(newConfig);
+  config = newConfig;
 };
 
 export let mutableLanguagesConfig: TranslationSchema = {

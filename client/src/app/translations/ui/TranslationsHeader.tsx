@@ -5,6 +5,7 @@ import NewTranslation from "../components/NewTranslation";
 
 const TranslationsHeader: FC = () => {
   const { config } = useSettingsContext();
+  console.log(config);
   return (
     <div className="py-12">
       <div className="flex items-center justify-between">

@@ -12,12 +12,12 @@ import {
   initLanguagesConfig,
   mutableLanguagesConfig,
   rootDir,
-  updateConfig,
   updateRootDir,
 } from "./config";
 import { initPort } from "./utils/port.util";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import settingsRouter from "./routes/settings";
+import { checkConfigFile } from "./utils/validate.util";
 
 dotenv.config();
 
@@ -26,80 +26,8 @@ export default async function startServer(isDev: boolean = false) {
     isDev ? path.join(__dirname, `../${process.env.TEST_DIR}`) : process.cwd()
   );
 
-  console.log("rootDir", rootDir);
-
-  let configFile = {};
-
-  if (rootDir && fs.existsSync(path.join(rootDir, "qtrans.config.json"))) {
-    try {
-      let rawConfigFile = fs.readFileSync(
-        path.join(rootDir, "qtrans.config.json"),
-        "utf-8"
-      );
-      if (!rawConfigFile || !rawConfigFile.trim().length) {
-        fs.writeFileSync(
-          path.join(rootDir, "qtrans.config.json"),
-          JSON.stringify({}, null, 2)
-        );
-        console.log(
-          kleur.yellow(
-            "qtrans.config.json file is empty, creating a new one with default values."
-          )
-        );
-
-        rawConfigFile = "{}";
-      }
-
-      configFile = JSON.parse(rawConfigFile);
-      updateConfig(() => JSON.parse(rawConfigFile));
-    } catch (error) {
-      console.log(
-        kleur.red(
-          "Error reading qtrans.config.json file. please make sure it is a valid JSON file."
-        )
-      );
-      console.log(kleur.red("Exiting the process."));
-      process.exit(1);
-    }
-  } else {
-    console.log(
-      kleur.red("No qtrans.config.json found in the root directory.")
-    );
-    console.log(
-      kleur.red(
-        "Exiting the process. you can set up it automatically by running `npx qtrans init`"
-      )
-    );
-    process.exit(1);
-  }
-
-  if (!config.port) {
-    config.port = 6757;
-  }
-  if (!config.name) {
-    config.name = path.basename(rootDir);
-  }
-  if (!config.location) {
-    if (fs.existsSync(path.join(rootDir, "src"))) {
-      config.location = "src/langs";
-    } else {
-      config.location = "langs";
-    }
-  }
-
-  if (JSON.stringify(configFile) !== JSON.stringify(config)) {
-    fs.writeFileSync(
-      path.join(rootDir, "qtrans.config.json"),
-      JSON.stringify(config, null, 2)
-    );
-    console.log(
-      kleur.yellow(
-        "qtrans.config.json file is missing some key properties, adding them with default values."
-      )
-    );
-  }
-
-  //check if langs.json exists and create it if it doesn't
+  if (!rootDir) return;
+  checkConfigFile();
 
   const dirPath = path.join(rootDir, config.location);
 

@@ -57,7 +57,10 @@ const EditTranslation: FC<EditTranslationProps> = ({
       );
     const promptData = {
       key: translationKey,
-      languages: languages.map((lang) => lang.toLowerCase()),
+      languages: languages.map((lang) => {
+        console.log(`${lang.toLowerCase()}-${languagesCodeMap[lang].Name}`);
+        return `${lang.toLowerCase()}-${languagesCodeMap[lang].Name}`;
+      }),
     };
 
     setIsGeneratingTranslations(true);

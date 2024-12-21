@@ -11,8 +11,7 @@ import { languagesValidator } from "../validators/settings.validator";
 export const fetchConfig = asyncHandler(
   async (_req: Request, res: Response): Promise<void> => {
     res.json({
-      name: config.name,
-      port: config.port,
+      ...config,
       languages: getLanguages(),
       defaultLanguage: getDefaultLanguage(),
     });

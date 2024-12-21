@@ -5,9 +5,12 @@ import {
   createTranslation,
   updateTranslation,
   deleteTranslation,
+  generateTranslations,
 } from "../controllers/translations.controller";
 
 const translationsRouter = Router();
+
+translationsRouter.post("/ai/generate", generateTranslations);
 
 translationsRouter
   .route("/:translationKey")

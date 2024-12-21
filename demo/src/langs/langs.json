@@ -1,32 +1,77 @@
 {
   "languages": [
-    "en"
+    "el",
+    "en",
+    "fr",
+    "sq",
+    "zh",
+    "ar"
   ],
   "defaultLanguage": "en",
   "translations": {
     "user_actions_create": {
-      "en": "Create User"
+      "en": "Create user",
+      "el": "Δημιουργία χρήστη",
+      "fr": "Créer un utilisateur",
+      "sq": "Krijo përdorues",
+      "zh": "创建用户",
+      "ar": "إنشاء مستخدم"
     },
     "user_actions_delete": {
-      "en": "Delete User"
+      "en": "Delete user",
+      "el": "Διαγραφή χρήστη",
+      "fr": "Supprimer l'utilisateur",
+      "sq": "Fshij përdoruesin",
+      "zh": "删除用户",
+      "ar": "حذف المستخدم"
     },
     "user_actions_update": {
-      "en": "Update User"
+      "en": "Update user",
+      "el": "Ενημέρωση χρήστη",
+      "fr": "Mettre à jour l'utilisateur",
+      "sq": "Përditëso përdoruesin",
+      "zh": "更新用户",
+      "ar": "تحديث المستخدم"
     },
     "user_actions_delete_success": {
-      "en": "User has been successfully deleted"
+      "en": "User deleted successfully",
+      "el": "Ο χρήστης διαγράφηκε με επιτυχία",
+      "fr": "Utilisateur supprimé avec succès",
+      "sq": "Përdoruesi u fshi me sukses",
+      "zh": "用户已成功删除",
+      "ar": "تم حذف المستخدم بنجاح"
     },
     "user_actions_delete_error": {
-      "en": "Error while deleting the user"
+      "en": "Error deleting user",
+      "el": "Σφάλμα κατά τη διαγραφή χρήστη",
+      "fr": "Erreur lors de la suppression de l'utilisateur",
+      "sq": "Gabim gjatë fshirjes së përdoruesit",
+      "zh": "删除用户出错",
+      "ar": "خطأ في حذف المستخدم"
     },
     "user_actions_create_success": {
-      "en": "User has been successfully created"
+      "en": "User created successfully",
+      "el": "Ο χρήστης δημιουργήθηκε με επιτυχία",
+      "fr": "Utilisateur créé avec succès",
+      "sq": "Përdoruesi u krijua me sukses",
+      "zh": "用户创建成功",
+      "ar": "تم إنشاء المستخدم بنجاح"
     },
     "user_actions_create_error": {
-      "en": "Error while creating the user"
+      "en": "Error creating user",
+      "el": "Σφάλμα κατά τη δημιουργία χρήστη",
+      "fr": "Erreur lors de la création de l'utilisateur",
+      "sq": "Gabim gjatë krijimit të përdoruesit",
+      "zh": "创建用户时出错",
+      "ar": "خطأ في إنشاء المستخدم"
     },
     "user_actions_update_success": {
-      "en": "User has been successfully updated"
+      "en": "User updated successfully",
+      "el": "Επιτυχής ενημέρωση χρήστη",
+      "fr": "Utilisateur mis à jour avec succès",
+      "sq": "Përdoruesi u përditësua me sukses",
+      "zh": "用户更新成功",
+      "ar": "تم تحديث المستخدم بنجاح"
     }
   }
 }

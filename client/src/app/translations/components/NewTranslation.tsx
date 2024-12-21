@@ -47,7 +47,9 @@ const NewTranslation: FC = () => {
       );
     const promptData = {
       key: translationKey,
-      languages: languages.map((lang) => lang.toLowerCase()),
+      languages: languages.map(
+        (lang) => `${lang.toLowerCase()}-${languagesCodeMap[lang].Name}`
+      ),
     };
 
     setIsGeneratingTranslations(true);

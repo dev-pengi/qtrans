@@ -1,6 +1,10 @@
 {
-  "name": "qtrans",
-  "location": "src/langs",
+  "typeSafe": true,
+  "llm_config": {
+    "model": "gemini",
+    "api_key": "ENV.{{GEMINI_API_KEY}}"
+  },
   "port": 6757,
-  "typeSafe": true
+  "name": "demo",
+  "location": "src/langs"
 }
