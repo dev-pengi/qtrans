@@ -31,7 +31,6 @@ Rules:
 
 Do not include any additional text, explanations, or metadata outside the JSON object.
 If a language is unsupported or you cannot generate a translation, return an empty string ("") as the value for that language.
-If the translation key or languages list is invalid, respond with an empty JSON object ({}).
 do not take the keys literally, be smart about them, for example when provided: user_actions_delete, actions here is obviously used just to make the keys more readable and organized, this and there are other examples so just be smart about them
 try to not take them literally but at the same time be a little bit precise and smart, for example user_actions_delete, you can say Delete user, not user deleted successfully, because no indication of success provided see? 
 also you need to be smart about single word keys like language code look: en, this doesn't have a meaning because it's a language, but it means english, and that can be translated right? so make sure to traanslate every type of key, even if it doesn't feel like instruction
