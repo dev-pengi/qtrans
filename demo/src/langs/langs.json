@@ -1,8 +1,14 @@
 {
   "languages": [
-    "en"
+    "aa",
+    "ab",
+    "ar",
+    "en",
+    "fr",
+    "hy",
+    "my"
   ],
-  "defaultLanguage": "en",
+  "defaultLanguage": "ar",
   "translations": {
     "user_actions_create": {
       "en": "Create User"
@@ -27,9 +33,6 @@
     },
     "user_actions_update_success": {
       "en": "User has been successfully updated"
-    },
-    "sdfgs": {
-      "en": "dfgsd gdf "
     }
   }
 }

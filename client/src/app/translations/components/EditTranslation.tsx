@@ -102,7 +102,6 @@ const EditTranslation: FC<EditTranslationProps> = ({
       }
     );
   };
-
   return (
     <>
       {children && <div onClick={translationModal.open}>{children}</div>}
@@ -111,7 +110,6 @@ const EditTranslation: FC<EditTranslationProps> = ({
         disabled={isGeneratingTranslations}
         useActionButtons
         modalRef={translationModal}
-        useHeaders={false}
         onClose={() => {
           setLanguagesValues(resetInputs());
         }}
@@ -144,26 +142,34 @@ const EditTranslation: FC<EditTranslationProps> = ({
           </h4>
         </div>
         <div className="flex flex-col gap-3 mt-5">
-          {languages.map((language) => (
-            <Input
-              key={`edit-translation-input-${language}`}
-              id={`edit-translation-input-${language}`}
-              value={languagesValues[language]}
-              autoFocus={language === defaultLanguage}
-              onChange={(e) =>
-                setLanguagesValues((prev) => ({
-                  ...prev,
-                  [language]: e.target.value,
-                }))
-              }
-              label={
-                language === defaultLanguage
-                  ? `${languagesCodeMap[language].Name} (default)`
-                  : languagesCodeMap[language].Name
-              }
-              placeholder={`${languagesCodeMap[language].Name} Translation`}
-            />
-          ))}
+          {languages
+            .sort((a, b) => {
+              const aDefault = defaultLanguage === a;
+              const bDefault = defaultLanguage === b;
+              if (aDefault && !bDefault) return -1;
+              if (!aDefault && bDefault) return 1;
+              return 0;
+            })
+            .map((language) => (
+              <Input
+                key={`edit-translation-input-${language}`}
+                id={`edit-translation-input-${language}`}
+                value={languagesValues[language]}
+                autoFocus={language === defaultLanguage}
+                onChange={(e) =>
+                  setLanguagesValues((prev) => ({
+                    ...prev,
+                    [language]: e.target.value,
+                  }))
+                }
+                label={
+                  language === defaultLanguage
+                    ? `${languagesCodeMap[language].Name} (default)`
+                    : languagesCodeMap[language].Name
+                }
+                placeholder={`${languagesCodeMap[language].Name} Translation`}
+              />
+            ))}
         </div>
       </Modal>
     </>

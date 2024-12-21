@@ -9,8 +9,6 @@ import { errorHandler, notFound } from "./middlewares/error.middleware";
 import yaml from "yaml";
 import {
   config,
-  getDefaultLanguage,
-  getLanguages,
   initLanguagesConfig,
   mutableLanguagesConfig,
   rootDir,
@@ -19,6 +17,7 @@ import {
 } from "./config";
 import { initPort } from "./utils/port.util";
 import { createProxyMiddleware } from "http-proxy-middleware";
+import settingsRouter from "./routes/settings";
 
 dotenv.config();
 
@@ -165,6 +164,7 @@ export default async function startServer(isDev: boolean = false) {
 
   app.use(express.json());
   app.use("/api/translations", translationsRouter);
+  app.use("/api/settings", settingsRouter);
 
   if (isDev) {
     const swaggerSpec = yaml.parse(
@@ -172,15 +172,6 @@ export default async function startServer(isDev: boolean = false) {
     );
     app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   }
-
-  app.get("/api/settings", (_req, res) => {
-    res.json({
-      name: config.name,
-      port: config.port,
-      languages: getLanguages(),
-      defaultLanguage: getDefaultLanguage(),
-    });
-  });
 
   app.get("/api", (_req, res) => {
     res.json({ message: "API is working lol" });

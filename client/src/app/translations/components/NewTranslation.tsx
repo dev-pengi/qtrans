@@ -108,7 +108,6 @@ const NewTranslation: FC = () => {
         disabled={isGeneratingTranslations}
         useActionButtons
         modalRef={translationModal}
-        useHeaders={false}
         onClose={() => {
           setLanguagesValues(resetInputs());
           setTranslationKey("");
@@ -146,25 +145,33 @@ const NewTranslation: FC = () => {
           </h4>
         </div>
         <div className="flex flex-col gap-3 mt-5">
-          {languages.map((language) => (
-            <Input
-              key={`new-translation-input-${language}`}
-              id={`new-translation-input-${language}`}
-              value={languagesValues[language]}
-              onChange={(e) =>
-                setLanguagesValues((prev) => ({
-                  ...prev,
-                  [language]: e.target.value,
-                }))
-              }
-              label={
-                language === defaultLanguage
-                  ? `${languagesCodeMap[language].Name} (default)`
-                  : languagesCodeMap[language].Name
-              }
-              placeholder={`${languagesCodeMap[language].Name} Translation`}
-            />
-          ))}
+          {languages
+            .sort((a, b) => {
+              const aDefault = config.defaultLanguage === a;
+              const bDefault = config.defaultLanguage === b;
+              if (aDefault && !bDefault) return -1;
+              if (!aDefault && bDefault) return 1;
+              return 0;
+            })
+            .map((language) => (
+              <Input
+                key={`new-translation-input-${language}`}
+                id={`new-translation-input-${language}`}
+                value={languagesValues[language]}
+                onChange={(e) =>
+                  setLanguagesValues((prev) => ({
+                    ...prev,
+                    [language]: e.target.value,
+                  }))
+                }
+                label={
+                  language === defaultLanguage
+                    ? `${languagesCodeMap[language].Name} (default)`
+                    : languagesCodeMap[language].Name
+                }
+                placeholder={`${languagesCodeMap[language].Name} Translation`}
+              />
+            ))}
         </div>
       </Modal>
     </>

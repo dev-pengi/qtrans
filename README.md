@@ -1,1 +1,1 @@
-Translation File manager
+# QTrans

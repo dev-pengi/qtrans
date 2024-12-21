@@ -162,3 +162,17 @@ export const setDefaultLanguage = (language: string) => {
     }));
   }
 };
+
+export const setLanguages = ({
+  languages,
+  defaultLanguage,
+}: {
+  languages: string[];
+  defaultLanguage: string;
+}) => {
+  updateMutableLanguagesConfig((prev) => ({
+    ...prev,
+    languages,
+    defaultLanguage,
+  }));
+};
