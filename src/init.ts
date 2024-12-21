@@ -12,7 +12,7 @@ function ensureDirectoryExists(dirPath: string) {
   const parts = path.relative(basePath, fullPath).split(path.sep);
   let currentPath = basePath;
 
-  parts.forEach((part, index) => {
+  parts.forEach((part) => {
     currentPath = path.join(currentPath, part);
 
     if (!fs.existsSync(currentPath)) {
