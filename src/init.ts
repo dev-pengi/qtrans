@@ -15,13 +15,7 @@ function ensureDirectoryExists(dirPath: string) {
   parts.forEach((part, index) => {
     currentPath = path.join(currentPath, part);
 
-    if (fs.existsSync(currentPath)) {
-      if (index === parts.length - 1) {
-        throw new Error(
-          `The final directory already exists: ${currentPath}. Cannot proceed.`
-        );
-      }
-    } else {
+    if (!fs.existsSync(currentPath)) {
       fs.mkdirSync(currentPath);
     }
   });
