@@ -5,7 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQueryClient } from "@tanstack/react-query";
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { generateTranslations, updateTranslation } from "src/api";
 import { ActivityIndicator, Button, Modal } from "src/components";
@@ -34,6 +34,7 @@ const MissingValuesChecker: FC<MissingValuesCheckerProps> = ({
   const [generationProgress, setGenerationProgress] = useState(0);
   const [errorCount, setErrorCount] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
+  const errorsOnRow = useRef(0);
 
   const autoGenerateMissingValues = async () => {
     setIsGenerating(true);
@@ -65,8 +66,14 @@ const MissingValuesChecker: FC<MissingValuesCheckerProps> = ({
       }
 
       try {
-        if (errorCount <= 10) sleep(300);
-        else if (errorCount > 10) sleep(1100);
+        //avoid rate limiting
+
+        console.log(errorsOnRow.current);
+        if (errorsOnRow.current < 2) await sleep(900);
+        if (errorsOnRow.current >= 2 && errorsOnRow.current < 4)
+          await sleep(14000);
+        else if (errorsOnRow.current >= 4) await sleep(40000);
+
         const data = await generateTranslations(promptData);
 
         const newTranslation = await updateTranslation(translation.key, data);
@@ -82,14 +89,17 @@ const MissingValuesChecker: FC<MissingValuesCheckerProps> = ({
           ["translations", translation.key],
           newTranslation
         );
+        errorsOnRow.current = 0;
         setGenerationProgress((prev) => (prev += 1));
       } catch (error) {
         setErrorCount((prev) => (prev += 1));
+        errorsOnRow.current += 1;
       }
     }
     toast.success(
       `generated missing values for ${generationProgress} translation`
     );
+    errorsOnRow.current = 0;
     setGenerationProgress(0);
     setErrorCount(0);
     setIsGenerating(false);
@@ -175,7 +185,9 @@ const MissingValuesChecker: FC<MissingValuesCheckerProps> = ({
               </li>
               <li>
                 between each generation there will be a waiting time of 1 second
-                to avoid rate limitings
+                to avoid rate limitings, in case of many errors on a row, the
+                waiting time will automatically increase to ensure low error
+                count
               </li>
             </ul>
             {config.llm_config ? (
@@ -204,7 +216,7 @@ const MissingValuesChecker: FC<MissingValuesCheckerProps> = ({
                 {generationProgress}
                 {"/"}
                 {totalCount} Done
-                {errorCount > 0 && `, ${errorCount} error`}
+                {errorCount > 0 && `, ${errorCount} Failed`}
               </p>
               <div className="mt-3 relative w-full bg-white/10 h-3 rounded-xl overflow-hidden">
                 <div
@@ -215,6 +227,12 @@ const MissingValuesChecker: FC<MissingValuesCheckerProps> = ({
                   }}
                 />
               </div>
+              {translationStats.unassignedLanguages.length > 30 && (
+                <h4 className="text-[13px] py-2 px-1 text-gray-2">
+                  this process might take a while to finish, please grab a cup
+                  of coffee and be patient.
+                </h4>
+              )}
             </div>
           </div>
         )}
