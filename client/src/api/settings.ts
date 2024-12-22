@@ -1,4 +1,4 @@
-import { Config, LanguagesConfig } from "src/types/settings";
+import { Config, LanguagesInConfig } from "src/types/settings";
 import handleFetch from "./fetch";
 
 export const fetchSettings = async (): Promise<Config> => {
@@ -6,7 +6,7 @@ export const fetchSettings = async (): Promise<Config> => {
 };
 
 export const configureLanguages = async (
-  languagesConfig: LanguagesConfig
+  languagesConfig: LanguagesInConfig
 ): Promise<Config> => {
   return handleFetch("/api/settings/languages", {
     method: "PUT",

@@ -20,6 +20,7 @@ export default defineConfig({
   ],
   build: {
     outDir: "../dist/build",
+    emptyOutDir: true,
   },
   server: {
     hmr: {
