@@ -6,6 +6,7 @@ import { Button, Modal, MultiSelect, SelectMenu } from "src/components";
 import { languagesCodeMap } from "src/constants";
 import { useSettingsContext } from "src/contexts";
 import { useModalRef } from "src/hooks";
+import { Language } from "src/types";
 
 const SettingsConfiguration: FC = () => {
   const configurationsModal = useModalRef();
@@ -76,14 +77,16 @@ const SettingsConfiguration: FC = () => {
                   return 0;
                 })
                 .filter((lang) => {
-                  return selectedLanguages.includes(lang[0]);
+                  return selectedLanguages.includes(lang[0] as Language);
                 })
                 .map((lang) => ({
                   value: lang[0],
                   label: lang[1].Name,
                   default: lang[0] === "en",
                 }))}
-              onSelect={(value) => setDefaultLanguage(value.value)}
+              onSelect={(value) =>
+                setDefaultLanguage(value.value as typeof defaultLanguage)
+              }
               activeOption={
                 selectedLanguages.includes(defaultLanguage)
                   ? defaultLanguage
@@ -95,8 +98,8 @@ const SettingsConfiguration: FC = () => {
             label="Languages"
             options={Object.entries(languagesCodeMap)
               .sort((a, b) => {
-                const aIncluded = selectedLanguages.includes(a[0]);
-                const bIncluded = selectedLanguages.includes(b[0]);
+                const aIncluded = selectedLanguages.includes(a[0] as Language);
+                const bIncluded = selectedLanguages.includes(b[0] as Language);
 
                 if (aIncluded && !bIncluded) return -1;
                 if (!aIncluded && bIncluded) return 1;
@@ -114,7 +117,9 @@ const SettingsConfiguration: FC = () => {
               }))}
             activeOptions={selectedLanguages}
             onSelect={(selectedLanguages) =>
-              setSelectedLanguages(selectedLanguages.map((lang) => lang.value))
+              setSelectedLanguages(
+                selectedLanguages.map((lang) => lang.value as Language)
+              )
             }
           >
             {selectedLanguages.length} Language Selected
