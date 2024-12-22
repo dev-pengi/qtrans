@@ -55,12 +55,13 @@ export const checkConfigFile = () => {
   }
 
   const applyDefaults = (obj: any, defaultValues: Record<string, any>): any => {
+    let newObj = { ...obj };
     for (const key in defaultValues) {
-      if (!(key in obj)) {
-        obj[key] = defaultValues[key];
+      if (!(key in newObj)) {
+        newObj[key] = defaultValues[key];
       }
     }
-    return obj;
+    return newObj;
   };
 
   const ensureDefaultsInConfig = () => {
@@ -70,20 +71,56 @@ export const checkConfigFile = () => {
       const configData = fs.readFileSync(configFilePath, { encoding: "utf-8" });
       let configFile = JSON.parse(configData);
 
+      console.log(configFile);
       const newConfig = applyDefaults(configFile, defaultConfig);
-
-      fs.writeFileSync(configFilePath, JSON.stringify(newConfig, null, 2), {
-        encoding: "utf-8",
-      });
-
+      console.log(newConfig);
       if (JSON.stringify(newConfig) !== JSON.stringify(configFile)) {
         console.log("Defaults applied and saved to config file.");
+        fs.writeFileSync(configFilePath, JSON.stringify(newConfig, null, 2), {
+          encoding: "utf-8",
+        });
       }
       updateConfig(() => newConfig);
-    } catch (error) {
-      console.error("Error updating configuration file:", error);
+    } catch (error: any) {
+      throw new Error(error);
     }
   };
 
   ensureDefaultsInConfig();
+
+  const debounce = (func: Function, wait: number) => {
+    let timeout: NodeJS.Timeout;
+    return (...args: any[]) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+  };
+
+  const watchConfigFile = () => {
+    if (!rootDir) return;
+    const configFilePath = path.join(rootDir, "qtrans.config.json");
+    const debouncedUpdate = debounce(() => {
+      console.log(
+        kleur.yellow("detected changes in qtrans.config.json. updating...")
+      );
+      try {
+        ensureDefaultsInConfig();
+        console.log(kleur.green("qtrans.config.json file has been updated."));
+      } catch (error) {
+        console.log(
+          kleur.red(
+            "couldn't update the config file, the server will still be running using the last version of the config"
+          )
+        );
+      }
+    }, 100);
+
+    fs.watch(configFilePath, (eventType) => {
+      if (eventType === "change") {
+        debouncedUpdate();
+      }
+    });
+  };
+
+  watchConfigFile();
 };

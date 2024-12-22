@@ -6,7 +6,7 @@ import { Button, Input, Modal } from "src/components";
 import { languagesCodeMap } from "src/constants";
 import { useSettingsContext } from "src/contexts";
 import { useModalRef, useTranslations } from "src/hooks";
-import { Language, Translation, TranslationValue } from "src/types";
+import { Language, Prompt, Translation } from "src/types";
 
 interface EditTranslationProps {
   translation: Translation;
@@ -53,11 +53,8 @@ const EditTranslation: FC<EditTranslationProps> = ({
       return toast.error(
         "Translation key must be provided to auto-generate translations"
       );
-    const promptData: {
-      key: string;
-      languages: `${Language}-${string}`[];
-      providedValues?: TranslationValue;
-    } = {
+
+    const promptData: Prompt = {
       key: translationKey,
       languages: languages.map(
         (lang) =>
@@ -67,16 +64,6 @@ const EditTranslation: FC<EditTranslationProps> = ({
       ),
     };
 
-    // const validProvidedValues = Object.entries(languagesValues)
-    //   .filter(([_, value]) => value.trim() !== "")
-    //   .reduce((acc, [lang, value]) => {
-    //     acc[lang] = value;
-    //     return acc;
-    //   }, {} as TranslationValue);
-
-    // if (Object.keys(validProvidedValues).length > 0) {
-    //   promptData.providedValues = validProvidedValues;
-    // }
     if (languagesValues[defaultLanguage]) {
       promptData.providedValues = {
         [defaultLanguage]: languagesValues[defaultLanguage],

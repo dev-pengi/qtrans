@@ -6,6 +6,7 @@ import { Button, Input, Modal } from "src/components";
 import { languagesCodeMap } from "src/constants";
 import { useSettingsContext } from "src/contexts";
 import { useModalRef, useTranslations } from "src/hooks";
+import { Language, Prompt } from "src/types";
 
 const NewTranslation: FC = () => {
   const translationModal = useModalRef();
@@ -45,13 +46,22 @@ const NewTranslation: FC = () => {
       return toast.error(
         "Translation key must be provided to auto-generate translations"
       );
-    const promptData = {
+
+    const promptData: Prompt = {
       key: translationKey,
       languages: languages.map(
-        (lang) => `${lang.toLowerCase()}-${languagesCodeMap[lang].Name}`
+        (lang) =>
+          `${lang.toLowerCase()}-${
+            languagesCodeMap[lang].Name
+          }` as `${Language}-${string}`
       ),
     };
 
+    if (languagesValues[defaultLanguage]) {
+      promptData.providedValues = {
+        [defaultLanguage]: languagesValues[defaultLanguage],
+      };
+    }
     setIsGeneratingTranslations(true);
 
     try {

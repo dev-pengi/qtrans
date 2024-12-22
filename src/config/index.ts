@@ -118,6 +118,7 @@ export const getLanguages = () => {
 export const getDefaultLanguage = () => {
   return mutableLanguagesConfig.defaultLanguage;
 };
+
 export const addTranslation = (
   key: string,
   value: { [key: string]: string }

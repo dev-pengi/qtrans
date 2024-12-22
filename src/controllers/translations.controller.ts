@@ -160,8 +160,6 @@ export const generateTranslations = asyncHandler(
           ""
         );
 
-      console.log(generatedResponse);
-
       const jsonData = JSON.parse(generatedResponse);
 
       res.status(200).send(jsonData);

@@ -3,7 +3,7 @@
     "ar",
     "en",
     "fr",
-    "zh"
+    "am"
   ],
   "defaultLanguage": "en",
   "translations": {
@@ -11,7 +11,7 @@
       "en": "Create user",
       "fr": "Créer un utilisateur",
       "ar": "إنشاء مستخدم",
-      "zh": "创建用户"
+      "am": "ተጠቃሚ ፍጠር"
     }
   }
 }

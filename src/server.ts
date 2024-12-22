@@ -78,7 +78,6 @@ export default async function startServer(isDev: boolean = false) {
   }
 
   const app = express();
-  //check if the port is already in use and if it is, try again by incrementing the port number over and over
 
   console.log(
     kleur.blue(
