@@ -12,6 +12,8 @@ import { Config } from "src/types";
 interface SettingsContextProps {
   config: Config;
   setConfig: Dispatch<SetStateAction<Config>>;
+  searchKeyword: string;
+  setSearchKeyword: Dispatch<SetStateAction<string>>;
 }
 
 const SettingsContext = createContext<SettingsContextProps | undefined>(
@@ -41,11 +43,16 @@ export const SettingsContextProvider: FC<SettingsContextProviderProps> = ({
     defaultLanguage: "en",
     name: "Qtrans",
     port: 0,
+    location: "",
   });
+
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   const value: SettingsContextProps = {
     config,
     setConfig,
+    searchKeyword,
+    setSearchKeyword,
   };
 
   return (

@@ -153,7 +153,16 @@ export const generateTranslations = asyncHandler(
       if (data.error || !data.candidates || !data.candidates[0]) {
         throw new Error(`Couldn't generate translations ${data.error}`);
       }
-      const jsonData = JSON.parse(data.candidates[0].content.parts[0].text);
+
+      const generatedResponse =
+        data.candidates[0].content.parts[0].text.replace(
+          /```[a-zA-Z0-9]*\n|\n```/g,
+          ""
+        );
+
+      console.log(generatedResponse);
+
+      const jsonData = JSON.parse(generatedResponse);
 
       res.status(200).send(jsonData);
     } catch (error: any) {

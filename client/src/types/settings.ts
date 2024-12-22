@@ -1,9 +1,26 @@
-export type LanguagesConfig = {
-  languages: string[];
-  defaultLanguage: string;
+import { languagesCodeMap } from "src/constants";
+
+export type ConfigBase = {
+  port: number;
+  name: string;
+  location: string;
 };
 
-export type Config = {
-  name: string;
-  port: number;
-} & LanguagesConfig;
+export type LLMConfig = {
+  model: string;
+  api_key: string;
+};
+
+export type Language = keyof typeof languagesCodeMap;
+
+export type LanguagesInConfig = {
+  defaultLanguage: Language;
+  languages: Language[];
+};
+
+export type Config = ConfigBase &
+  LanguagesInConfig &
+  Partial<{
+    typeSafe?: boolean;
+    llm_config?: LLMConfig;
+  }>;
