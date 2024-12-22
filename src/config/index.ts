@@ -75,6 +75,52 @@ export let mutableLanguagesConfig: TranslationSchema = {
   translations: {},
 };
 
+export const generateTypes = () => {
+  const typeDefs = `
+// THIS FILE IS AUTO GENERATED, DO NOT MODIFY MANUALLY.
+
+export type Language = ${
+    mutableLanguagesConfig.languages.length > 0
+      ? mutableLanguagesConfig.languages.map((lang) => `"${lang}"`).join(" | ")
+      : "string"
+  };
+
+export type DefaultLanguage = "${
+    mutableLanguagesConfig.defaultLanguage || "string"
+  }";
+
+export type TranslationKey = ${
+    Object.keys(mutableLanguagesConfig.translations).length > 0
+      ? Object.keys(mutableLanguagesConfig.translations)
+          .map((key) => `"${key}"`)
+          .join(" | ")
+      : "string"
+  };
+
+export type Translations = Record<TranslationKey, Record<Language, string>>;
+
+export interface TranslationFileSchema {
+  languages: Language[];
+  defaultLanguage: Language;
+  translations: Translations;
+}
+`;
+
+  if (!rootDir) return;
+  const dirPath = path.join(rootDir, config.location);
+  const typesDir = path.join(dirPath, "types");
+  if (config.typeSafe) {
+    if (!fs.existsSync(typesDir)) {
+      fs.mkdirSync(typesDir);
+    }
+    fs.writeFileSync(path.join(typesDir, "index.d.ts"), typeDefs.trim());
+  } else {
+    if (fs.existsSync(path.join(typesDir, "index.d.ts"))) {
+      fs.unlinkSync(path.join(typesDir, "index.d.ts"));
+    }
+  }
+};
+
 export let updateMutableLanguagesConfig = (
   callback: (
     prev: typeof mutableLanguagesConfig
@@ -88,15 +134,19 @@ export let updateMutableLanguagesConfig = (
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, { recursive: true });
     }
+
     fs.writeFileSync(
       path.join(dirPath, "langs.json"),
       JSON.stringify(mutableLanguagesConfig, null, 2)
     );
   }
+
+  generateTypes();
 };
 
 export const initLanguagesConfig = (config: any) => {
   mutableLanguagesConfig = config;
+  generateTypes();
 };
 
 export const getLanguagesConfig = () => {

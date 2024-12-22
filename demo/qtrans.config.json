@@ -1,5 +1,5 @@
 {
-  "typeSafe": true,
+  "typeSafe": false,
   "llm_config": {
     "model": "gemini",
     "api_key": "ENV.{{GEMINI_API_KEY}}"

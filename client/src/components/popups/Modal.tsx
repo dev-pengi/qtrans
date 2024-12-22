@@ -71,6 +71,7 @@ const Modal: FC<ModalProps> = ({
       onClose && onClose();
     }, 100);
   };
+  
   const handleCancel = () => {
     if (isLoading || !modalRef.isOpen) return;
 

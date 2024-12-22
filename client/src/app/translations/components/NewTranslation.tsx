@@ -41,6 +41,11 @@ const NewTranslation: FC = () => {
     setLanguagesValues(resetInputs());
   }, [languages]);
 
+  const reset = () => {
+    setLanguagesValues(resetInputs());
+    setTranslationKey("");
+  };
+
   const generateTranslationsByAi = async () => {
     if (!translationKey)
       return toast.error(
@@ -101,11 +106,14 @@ const NewTranslation: FC = () => {
         onSuccess: () => {
           toast.success("Translation has been successfully created");
           translationModal.close();
+          reset();
+        },
+        onError: () => {
+          toast.error("Translation creation failed.");
         },
       }
     );
   };
-
   return (
     <>
       <Button
@@ -120,10 +128,7 @@ const NewTranslation: FC = () => {
         disabled={isGeneratingTranslations}
         useActionButtons
         modalRef={translationModal}
-        onClose={() => {
-          setLanguagesValues(resetInputs());
-          setTranslationKey("");
-        }}
+        onClose={() => reset()}
         submitButton={"Create Translation"}
         onSubmit={createTranslation}
         isLoading={newTranslationMutation.isPending}

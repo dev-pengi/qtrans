@@ -64,7 +64,6 @@ const MissingValuesChecker: FC<MissingValuesCheckerProps> = ({
         promptData.providedValues = validProvidedValues;
       }
 
-      setGenerationProgress((prev) => (prev += 1));
       try {
         if (errorCount <= 10) sleep(300);
         else if (errorCount > 10) sleep(1100);
@@ -83,17 +82,18 @@ const MissingValuesChecker: FC<MissingValuesCheckerProps> = ({
           ["translations", translation.key],
           newTranslation
         );
+        setGenerationProgress((prev) => (prev += 1));
       } catch (error) {
         setErrorCount((prev) => (prev += 1));
       }
     }
+    toast.success(
+      `generated missing values for ${generationProgress} translation`
+    );
     setGenerationProgress(0);
     setErrorCount(0);
     setIsGenerating(false);
     AutoAssignerModal.close();
-    toast.success(
-      `generated missing values for ${generationProgress} translation`
-    );
   };
 
   return (
@@ -211,10 +211,7 @@ const MissingValuesChecker: FC<MissingValuesCheckerProps> = ({
                   className="absolute left-0 h-full bg-accent w-full"
                   style={{
                     transformOrigin: "0",
-                    transform: `scaleX(${
-                      generationProgress /
-                      totalCount
-                    })`,
+                    transform: `scaleX(${generationProgress / totalCount})`,
                   }}
                 />
               </div>

@@ -2,16 +2,29 @@
   "languages": [
     "ar",
     "en",
-    "fr",
+    "sq",
     "am"
   ],
   "defaultLanguage": "en",
   "translations": {
-    "create_user": {
-      "en": "Create user",
-      "fr": "Créer un utilisateur",
-      "ar": "إنشاء مستخدم",
-      "am": "ተጠቃሚ ፍጠር"
+    "new_user": {
+      "fr": "Nouvel utilisateur",
+      "en": "New user",
+      "ar": "مستخدم جديد",
+      "sq": "Përdorues i ri",
+      "am": "ተጠቃሚ አዲስ"
+    },
+    "delete_user": {
+      "en": "Delete User",
+      "ar": "حذف المستخدم",
+      "am": "ተጠቃሚን ሰርዝ",
+      "sq": "Fshij përdoruesin"
+    },
+    "generate_users": {
+      "en": "Generate Users",
+      "ar": "إنشاء مستخدمين",
+      "am": "ተጠቃሚዎችን ማመንጨት",
+      "sq": "Gjeneroni përdoruesit"
     }
   }
 }
