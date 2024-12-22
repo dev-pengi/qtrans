@@ -97,7 +97,7 @@ const MissingValuesChecker: FC<MissingValuesCheckerProps> = ({
       }
     }
     toast.success(
-      `generated missing values for ${generationProgress} translation`
+      `generated missing values`
     );
     errorsOnRow.current = 0;
     setGenerationProgress(0);
