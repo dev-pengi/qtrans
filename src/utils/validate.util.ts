@@ -71,11 +71,9 @@ export const checkConfigFile = () => {
       const configData = fs.readFileSync(configFilePath, { encoding: "utf-8" });
       let configFile = JSON.parse(configData);
 
-      console.log(configFile);
       const newConfig = applyDefaults(configFile, defaultConfig);
-      console.log(newConfig);
       if (JSON.stringify(newConfig) !== JSON.stringify(configFile)) {
-        console.log("Defaults applied and saved to config file.");
+        console.log(kleur.yellow("Defaults applied and saved to config file."));
         fs.writeFileSync(configFilePath, JSON.stringify(newConfig, null, 2), {
           encoding: "utf-8",
         });
