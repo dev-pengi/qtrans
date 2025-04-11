@@ -1,10 +1,10 @@
 import kleur from "kleur";
 import { Express } from "express";
 
-export const initPort = (app: Express, port: number) => {
+export const initPort = (app: Express, host: string, port: number) => {
   try {
-    app.listen(port, () => {
-      console.log(kleur.green(`Server is running on http://localhost:${port}`));
+    app.listen(port, host, () => {
+      console.log(kleur.green(`Server running on http://${host}:${port}`));
     });
   } catch (error) {
     console.log(

@@ -18,7 +18,17 @@ import { checkConfigFile } from "./utils/validate.util";
 
 dotenv.config();
 
-export default async function startServer(isDev: boolean = false) {
+interface ServerOptions {
+  isDev: boolean;
+  host?: string;
+  port?: number;
+}
+
+export default async function startServer(options: ServerOptions) {
+  const { isDev } = options;
+
+  const host = process.env.QTRANS_HOST || options.host || "localhost";
+
   updateRootDir(
     isDev ? path.join(__dirname, `../${process.env.TEST_DIR}`) : process.cwd()
   );
@@ -81,10 +91,11 @@ export default async function startServer(isDev: boolean = false) {
 
   console.log(
     kleur.blue(
-      `Starting the server on PORT ${config.port} for ${config.name} project...`
+      `Starting the server on ${host}:${config.port} for ${config.name} project...`
     )
   );
-  initPort(app, config.port);
+
+  initPort(app, host, config.port);
 
   app.use(express.json());
   app.use("/api/translations", translationsRouter);
@@ -119,5 +130,5 @@ export default async function startServer(isDev: boolean = false) {
 }
 
 if (process.env.NODE_ENV === "development") {
-  startServer(true);
+  startServer({ isDev: true });
 }

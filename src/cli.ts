@@ -14,6 +14,14 @@ program
 program
   .command("run")
   .description("Run the translation manager server")
-  .action(() => startServer(false));
+  .option("--host <host>", "Host to bind to", "localhost")
+  .option("--port <port>", "Port to listen on", "6757")
+  .action((options) => {
+    startServer({
+      isDev: false,
+      host: options.host,
+      port: parseInt(options.port, 10),
+    });
+  });
 
 program.parse(process.argv);
