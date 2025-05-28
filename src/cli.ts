@@ -16,10 +16,12 @@ program
   .description("Run the translation manager server")
   .option("--host <host>", "Host to bind to", "localhost")
   .option("--port <port>", "Port to listen on", "6757")
+  .option("--base <base>", "Base path for the server", "/")
   .action((options) => {
     startServer({
       isDev: false,
       host: options.host,
+      base: options.base,
       port: parseInt(options.port, 10),
     });
   });
