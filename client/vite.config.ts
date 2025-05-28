@@ -27,7 +27,7 @@ export default defineConfig({
       overlay: true,
     },
   },
-  base: "./",
+  // base: "./",
   resolve: {
     alias: {
       src: "/src",
