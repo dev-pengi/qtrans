@@ -41,10 +41,13 @@ export const scanDir = async ({
   } else {
     spinner.succeed("Found Qtrans config");
   }
-
-  spinner.start("Scanning JSX files...");
+  spinner.start(`Collecting files data...`);
 
   const files = getAllFiles(currentDir, [".jsx", ".tsx"]);
+  await delay(delayTime);
+
+  spinner.text = `Scanning JSX files... (0/${files.length})`;
+
   const results: {
     file: string;
     line: number;
@@ -52,7 +55,10 @@ export const scanDir = async ({
     text: string;
   }[] = [];
 
-  for (const file of files) {
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+
+    spinner.text = `Scanning JSX files... (${i + 1}/${files.length})`;
     const code = fs.readFileSync(file, "utf8");
 
     const ast = parse(code, {
@@ -135,7 +141,9 @@ export const scanDir = async ({
     });
   }
 
-  spinner.succeed(`Scan completed. Found ${results.length} matches:`);
+  spinner.succeed(
+    `Scan completed. Found ${results.length} matches in ${files.length} files`
+  );
 
   for (const r of results) {
     console.log(
