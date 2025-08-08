@@ -21,7 +21,6 @@ dotenv.config();
 interface ServerOptions {
   isDev: boolean;
   host?: string;
-  base?: string;
   port?: number;
 }
 
@@ -121,7 +120,7 @@ export default async function startServer(options: ServerOptions) {
 
     app.use(express.static(path.join(__dirname, "./build")));
 
-    app.get(options.base || "/", (_req, res) => {
+    app.get("/", (_req, res) => {
       res.sendFile(toolClientSource);
     });
   }
