@@ -63,7 +63,12 @@ export const scanDir = async ({
 
     const ast = parse(code, {
       sourceType: "module",
-      plugins: ["jsx", "typescript"],
+      plugins: [
+        "jsx",
+        "typescript",
+        ["decorators", { decoratorsBeforeExport: true }],
+        "decorators-legacy",
+      ],
     });
 
     const variableMap = new Map<string, string>();
