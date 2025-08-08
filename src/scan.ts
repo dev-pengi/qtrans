@@ -10,6 +10,9 @@ import { delay } from "./utils/time.util";
 const getAllFiles = (dir: string, ext: string[], files: string[] = []) => {
   for (const file of fs.readdirSync(dir)) {
     const fullPath = path.join(dir, file);
+
+    if (fullPath.includes("node_modules")) continue;
+
     if (fs.statSync(fullPath).isDirectory()) {
       getAllFiles(fullPath, ext, files);
     } else if (ext.some((e) => file.endsWith(e))) {
@@ -63,12 +66,7 @@ export const scanDir = async ({
 
     const ast = parse(code, {
       sourceType: "module",
-      plugins: [
-        "jsx",
-        "typescript",
-        ["decorators", { decoratorsBeforeExport: true }],
-        "decorators-legacy",
-      ],
+      plugins: ["jsx", "typescript", "decorators-legacy"],
     });
 
     const variableMap = new Map<string, string>();
