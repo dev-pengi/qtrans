@@ -7,14 +7,24 @@ import traverse from "@babel/traverse";
 import * as t from "@babel/types";
 import { delay } from "./utils/time.util";
 
-const getAllFiles = (dir: string, ext: string[], files: string[] = []) => {
+import { minimatch } from "minimatch";
+
+const getAllFiles = (
+  dir: string,
+  ext: string[],
+  files: string[] = [],
+  ignore: string[] = []
+) => {
   for (const file of fs.readdirSync(dir)) {
     const fullPath = path.join(dir, file);
+    const relPath = path.relative(process.cwd(), fullPath);
 
-    if (fullPath.includes("node_modules")) continue;
+    if (relPath.includes("node_modules")) continue;
+
+    if (ignore.some((pattern) => minimatch(relPath, pattern))) continue;
 
     if (fs.statSync(fullPath).isDirectory()) {
-      getAllFiles(fullPath, ext, files);
+      getAllFiles(fullPath, ext, files, ignore);
     } else if (ext.some((e) => file.endsWith(e))) {
       files.push(fullPath);
     }
@@ -24,8 +34,10 @@ const getAllFiles = (dir: string, ext: string[], files: string[] = []) => {
 
 export const scanDir = async ({
   attributes = [],
+  ignore = [], //mostly it could be folder names, file names with a pattern wild card
 }: {
   attributes: string[];
+  ignore: string[];
 }) => {
   const currentDir = process.cwd();
   const configPath = path.resolve(currentDir, "package.json");
@@ -46,7 +58,7 @@ export const scanDir = async ({
   }
   spinner.start(`Collecting files data...`);
 
-  const files = getAllFiles(currentDir, [".jsx", ".tsx"]);
+  const files = getAllFiles(currentDir, [".jsx", ".tsx"], [], ignore);
   await delay(delayTime);
 
   spinner.text = `Scanning JSX files... (0/${files.length})`;

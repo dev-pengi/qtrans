@@ -32,8 +32,12 @@ program
     "--attr <attribute-names...>",
     "Select what component attributes to be affected"
   )
+  .option(
+    "--ignore <patterns...>",
+    "Select what component attributes to be affected"
+  )
   .action((opts) => {
-    scanDir({ attributes: opts.attr });
+    scanDir({ attributes: opts.attr, ignore: opts.patterns });
   });
 
 program.parse(process.argv);
