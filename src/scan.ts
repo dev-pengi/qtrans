@@ -18,10 +18,12 @@ const getAllFiles = async (
   const entries = await fs.promises.readdir(dir);
   for (const file of entries) {
     const fullPath = path.join(dir, file);
-    const relPath = path.relative(process.cwd(), fullPath);
+    const relPath = path.relative(process.cwd(), fullPath).replace(/^\.\//, "");
 
     if (relPath.includes("node_modules")) continue;
-    if (ignore.some((pattern) => minimatch(relPath, pattern))) continue;
+    
+    if (ignore.some((pattern) => minimatch(relPath, pattern, { dot: true })))
+      continue;
 
     const stat = await fs.promises.stat(fullPath);
     if (stat.isDirectory()) {
@@ -165,7 +167,7 @@ export const scanDir = async ({
       if (!(err instanceof Error)) return;
 
       if (err.message === "STOP") break;
-      
+
       throw err;
     }
   }
