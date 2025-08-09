@@ -36,7 +36,7 @@ const getAllFiles = async (
 export const scanDir = async ({
   attributes = [],
   ignore = [],
-  maxResults = 0, //if 0 show all results, if more than 0 show up to the number
+  maxResults = 0,
 }: {
   attributes: string[];
   ignore: string[];
@@ -64,10 +64,6 @@ export const scanDir = async ({
 
   let files = await getAllFiles(currentDir, [".jsx", ".tsx"], [], ignore);
 
-  if (maxResults > 0 && maxResults < files.length) {
-    files = files.slice(0, maxResults);
-  }
-
   await delay(delayTime);
 
   spinner.text = `Scanning JSX files... (0/${files.length})`;
@@ -79,9 +75,9 @@ export const scanDir = async ({
     text: string;
   }[] = [];
 
+
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-
     spinner.text = `Scanning JSX files... (${i + 1}/${files.length})`;
     const code = await fs.promises.readFile(file, "utf8");
 
@@ -98,38 +94,39 @@ export const scanDir = async ({
           variableMap.set(path.node.id.name, path.node.init.value);
         }
       },
-      // ImportDeclaration(_path) {
-      //   console.log(path);
-      // },
     });
 
     traverse(ast, {
       JSXElement(path) {
         const openingEl = path.node.openingElement;
 
+        const addResult = (line: number, col: number, text: string) => {
+          results.push({ file, line, column: col, text });
+          if (maxResults > 0 && results.length >= maxResults) {
+            throw "STOP";
+          }
+        };
+
         for (const child of path.node.children) {
           if (t.isJSXText(child)) {
             const raw = child.value.trim();
-            if (raw) {
-              results.push({
-                file,
-                line: child.loc?.start.line ?? 0,
-                column: child.loc?.start.column ?? 0,
-                text: raw,
-              });
-            }
+            if (raw)
+              addResult(
+                child.loc?.start.line ?? 0,
+                child.loc?.start.column ?? 0,
+                raw
+              );
           } else if (
             t.isJSXExpressionContainer(child) &&
             t.isIdentifier(child.expression)
           ) {
             const varName = child.expression.name;
             if (variableMap.has(varName)) {
-              results.push({
-                file,
-                line: child.loc?.start.line ?? 0,
-                column: child.loc?.start.column ?? 0,
-                text: variableMap.get(varName)!,
-              });
+              addResult(
+                child.loc?.start.line ?? 0,
+                child.loc?.start.column ?? 0,
+                variableMap.get(varName)!
+              );
             }
           }
         }
@@ -141,28 +138,38 @@ export const scanDir = async ({
             attributes.includes(attr.name.name)
           ) {
             if (t.isStringLiteral(attr.value)) {
-              results.push({
-                file,
-                line: attr.loc?.start.line ?? 0,
-                column: attr.loc?.start.column ?? 0,
-                text: attr.value.value,
-              });
+              addResult(
+                attr.loc?.start.line ?? 0,
+                attr.loc?.start.column ?? 0,
+                attr.value.value
+              );
             } else if (
               t.isJSXExpressionContainer(attr.value) &&
               t.isIdentifier(attr.value.expression) &&
               variableMap.has(attr.value.expression.name)
             ) {
-              results.push({
-                file,
-                line: attr.loc?.start.line ?? 0,
-                column: attr.loc?.start.column ?? 0,
-                text: variableMap.get(attr.value.expression.name)!,
-              });
+              addResult(
+                attr.loc?.start.line ?? 0,
+                attr.loc?.start.column ?? 0,
+                variableMap.get(attr.value.expression.name)!
+              );
             }
           }
         }
       },
     });
+  }
+
+  spinner.succeed(
+    `Scan completed. Found ${results.length} matches in ${files.length} files`
+  );
+
+  for (const r of results) {
+    console.log(
+      kleur.cyan(`${r.file}:${r.line}:${r.column}`) +
+        " - " +
+        kleur.yellow(`"${r.text}"`)
+    );
   }
 
   spinner.succeed(
