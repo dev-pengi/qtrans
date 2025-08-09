@@ -75,89 +75,99 @@ export const scanDir = async ({
     text: string;
   }[] = [];
 
-
   for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    spinner.text = `Scanning JSX files... (${i + 1}/${files.length})`;
-    const code = await fs.promises.readFile(file, "utf8");
+    try {
+      const file = files[i];
+      spinner.text = `Scanning JSX files... (${i + 1}/${files.length})`;
+      const code = await fs.promises.readFile(file, "utf8");
 
-    const ast = parse(code, {
-      sourceType: "module",
-      plugins: ["jsx", "typescript", "decorators-legacy"],
-    });
+      const ast = parse(code, {
+        sourceType: "module",
+        plugins: ["jsx", "typescript", "decorators-legacy"],
+      });
 
-    const variableMap = new Map<string, string>();
+      const variableMap = new Map<string, string>();
 
-    traverse(ast, {
-      VariableDeclarator(path) {
-        if (t.isIdentifier(path.node.id) && t.isStringLiteral(path.node.init)) {
-          variableMap.set(path.node.id.name, path.node.init.value);
-        }
-      },
-    });
-
-    traverse(ast, {
-      JSXElement(path) {
-        const openingEl = path.node.openingElement;
-
-        const addResult = (line: number, col: number, text: string) => {
-          results.push({ file, line, column: col, text });
-          if (maxResults > 0 && results.length >= maxResults) {
-            throw "STOP";
-          }
-        };
-
-        for (const child of path.node.children) {
-          if (t.isJSXText(child)) {
-            const raw = child.value.trim();
-            if (raw)
-              addResult(
-                child.loc?.start.line ?? 0,
-                child.loc?.start.column ?? 0,
-                raw
-              );
-          } else if (
-            t.isJSXExpressionContainer(child) &&
-            t.isIdentifier(child.expression)
-          ) {
-            const varName = child.expression.name;
-            if (variableMap.has(varName)) {
-              addResult(
-                child.loc?.start.line ?? 0,
-                child.loc?.start.column ?? 0,
-                variableMap.get(varName)!
-              );
-            }
-          }
-        }
-
-        for (const attr of openingEl.attributes) {
+      traverse(ast, {
+        VariableDeclarator(path) {
           if (
-            t.isJSXAttribute(attr) &&
-            t.isJSXIdentifier(attr.name) &&
-            attributes.includes(attr.name.name)
+            t.isIdentifier(path.node.id) &&
+            t.isStringLiteral(path.node.init)
           ) {
-            if (t.isStringLiteral(attr.value)) {
-              addResult(
-                attr.loc?.start.line ?? 0,
-                attr.loc?.start.column ?? 0,
-                attr.value.value
-              );
+            variableMap.set(path.node.id.name, path.node.init.value);
+          }
+        },
+      });
+
+      traverse(ast, {
+        JSXElement(path) {
+          const openingEl = path.node.openingElement;
+
+          const addResult = (line: number, col: number, text: string) => {
+            results.push({ file, line, column: col, text });
+            if (maxResults > 0 && results.length >= maxResults) {
+              throw new Error("STOP");
+            }
+          };
+
+          for (const child of path.node.children) {
+            if (t.isJSXText(child)) {
+              const raw = child.value.trim();
+              if (raw)
+                addResult(
+                  child.loc?.start.line ?? 0,
+                  child.loc?.start.column ?? 0,
+                  raw
+                );
             } else if (
-              t.isJSXExpressionContainer(attr.value) &&
-              t.isIdentifier(attr.value.expression) &&
-              variableMap.has(attr.value.expression.name)
+              t.isJSXExpressionContainer(child) &&
+              t.isIdentifier(child.expression)
             ) {
-              addResult(
-                attr.loc?.start.line ?? 0,
-                attr.loc?.start.column ?? 0,
-                variableMap.get(attr.value.expression.name)!
-              );
+              const varName = child.expression.name;
+              if (variableMap.has(varName)) {
+                addResult(
+                  child.loc?.start.line ?? 0,
+                  child.loc?.start.column ?? 0,
+                  variableMap.get(varName)!
+                );
+              }
             }
           }
-        }
-      },
-    });
+
+          for (const attr of openingEl.attributes) {
+            if (
+              t.isJSXAttribute(attr) &&
+              t.isJSXIdentifier(attr.name) &&
+              attributes.includes(attr.name.name)
+            ) {
+              if (t.isStringLiteral(attr.value)) {
+                addResult(
+                  attr.loc?.start.line ?? 0,
+                  attr.loc?.start.column ?? 0,
+                  attr.value.value
+                );
+              } else if (
+                t.isJSXExpressionContainer(attr.value) &&
+                t.isIdentifier(attr.value.expression) &&
+                variableMap.has(attr.value.expression.name)
+              ) {
+                addResult(
+                  attr.loc?.start.line ?? 0,
+                  attr.loc?.start.column ?? 0,
+                  variableMap.get(attr.value.expression.name)!
+                );
+              }
+            }
+          }
+        },
+      });
+    } catch (err) {
+      if (!(err instanceof Error)) return;
+
+      if (err.message === "STOP") break;
+      
+      throw err;
+    }
   }
 
   spinner.succeed(
