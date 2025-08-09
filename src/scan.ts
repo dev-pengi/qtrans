@@ -9,22 +9,23 @@ import { delay } from "./utils/time.util";
 
 import { minimatch } from "minimatch";
 
-const getAllFiles = (
+const getAllFiles = async (
   dir: string,
   ext: string[],
   files: string[] = [],
   ignore: string[] = []
-) => {
-  for (const file of fs.readdirSync(dir)) {
+): Promise<string[]> => {
+  const entries = await fs.promises.readdir(dir);
+  for (const file of entries) {
     const fullPath = path.join(dir, file);
     const relPath = path.relative(process.cwd(), fullPath);
 
     if (relPath.includes("node_modules")) continue;
-
     if (ignore.some((pattern) => minimatch(relPath, pattern))) continue;
 
-    if (fs.statSync(fullPath).isDirectory()) {
-      getAllFiles(fullPath, ext, files, ignore);
+    const stat = await fs.promises.stat(fullPath);
+    if (stat.isDirectory()) {
+      await getAllFiles(fullPath, ext, files, ignore);
     } else if (ext.some((e) => file.endsWith(e))) {
       files.push(fullPath);
     }
@@ -34,10 +35,12 @@ const getAllFiles = (
 
 export const scanDir = async ({
   attributes = [],
-  ignore = [], //mostly it could be folder names, file names with a pattern wild card
+  ignore = [],
+  maxResults = 0, //if 0 show all results, if more than 0 show up to the number
 }: {
   attributes: string[];
   ignore: string[];
+  maxResults: number;
 }) => {
   const currentDir = process.cwd();
   const configPath = path.resolve(currentDir, "package.json");
@@ -47,18 +50,24 @@ export const scanDir = async ({
   spinner.start("Checking for qtrans config...");
   await delay(delayTime);
 
-  if (!fs.existsSync(configPath)) {
+  try {
+    await fs.promises.access(configPath);
+  } catch {
     spinner.fail("config file not found");
     console.error(
       kleur.red("Error: Make sure you are in a qtrans initiated workspace!")
     );
     process.exit(1);
-  } else {
-    spinner.succeed("Found Qtrans config");
   }
+
   spinner.start(`Collecting files data...`);
 
-  const files = getAllFiles(currentDir, [".jsx", ".tsx"], [], ignore);
+  let files = await getAllFiles(currentDir, [".jsx", ".tsx"], [], ignore);
+
+  if (maxResults > 0 && maxResults < files.length) {
+    files = files.slice(0, maxResults);
+  }
+
   await delay(delayTime);
 
   spinner.text = `Scanning JSX files... (0/${files.length})`;
@@ -74,7 +83,7 @@ export const scanDir = async ({
     const file = files[i];
 
     spinner.text = `Scanning JSX files... (${i + 1}/${files.length})`;
-    const code = fs.readFileSync(file, "utf8");
+    const code = await fs.promises.readFile(file, "utf8");
 
     const ast = parse(code, {
       sourceType: "module",
@@ -89,9 +98,9 @@ export const scanDir = async ({
           variableMap.set(path.node.id.name, path.node.init.value);
         }
       },
-      ImportDeclaration(_path) {
-        // console.log(path)
-      },
+      // ImportDeclaration(_path) {
+      //   console.log(path);
+      // },
     });
 
     traverse(ast, {

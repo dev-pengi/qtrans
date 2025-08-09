@@ -36,8 +36,13 @@ program
     "--ignore <patterns...>",
     "Select what component attributes to be affected"
   )
+  .option("--max <maximum>", "Set the maximum amount of results", "0")
   .action((opts) => {
-    scanDir({ attributes: opts.attr, ignore: opts.patterns });
+    scanDir({
+      attributes: opts.attr,
+      ignore: opts.patterns,
+      maxResults: Number(opts.max) || 0,
+    });
   });
 
 program.parse(process.argv);
