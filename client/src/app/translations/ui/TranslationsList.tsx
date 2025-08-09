@@ -24,6 +24,7 @@ const TranslationsList: FC = () => {
   useEffect(() => {
     if (translations) {
       const fuse = new Fuse(translations, {
+        threshold: 0.6,
         keys: ["key", ...languages.map((lang) => `value.${lang}`)],
       });
 
