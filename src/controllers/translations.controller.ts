@@ -13,7 +13,7 @@ import {
   modifyTranslation,
   config,
 } from "../config";
-import { AI_PROMPT } from "../constants/prompts";
+import { AI_PROMPTS } from "../constants/prompts";
 
 export const fetchAllTranslations = asyncHandler(
   async (_req: Request, res: Response): Promise<void> => {
@@ -125,9 +125,14 @@ export const generateTranslations = asyncHandler(
       return;
     }
 
+    if (!llmConfig.model) llmConfig.model = "gemini-2.5-flash";
+
+    if (!llmConfig.prompt_strategy)
+      llmConfig.prompt_strategy = "negative_prompt";
+
     try {
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${llmConfig.api_key}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/${llmConfig.model}:generateContent?key=${llmConfig.api_key}`,
         {
           method: "POST",
           headers: {
@@ -138,9 +143,9 @@ export const generateTranslations = asyncHandler(
               {
                 parts: [
                   {
-                    text: `${AI_PROMPT} HERE IS THE PROMPT:\n\n\n${JSON.stringify(
-                      prompt
-                    )}`,
+                    text: `${
+                      AI_PROMPTS[llmConfig.prompt_strategy]
+                    } HERE IS THE PROMPT:\n\n\n${JSON.stringify(prompt)}`,
                   },
                 ],
               },
@@ -150,8 +155,17 @@ export const generateTranslations = asyncHandler(
       );
 
       const data = await response.json();
-      if (data.error || !data.candidates || !data.candidates[0]) {
-        throw new Error(`Couldn't generate translations ${data.error}`);
+
+      if (data.error) {
+        throw new Error(
+          `Gemini API Error: ${
+            data.error.message || JSON.stringify(data.error)
+          }`
+        );
+      }
+
+      if (!data.candidates || !data.candidates[0]) {
+        throw new Error("No candidates returned from Gemini API");
       }
 
       const generatedResponse =
@@ -164,8 +178,9 @@ export const generateTranslations = asyncHandler(
 
       res.status(200).send(jsonData);
     } catch (error: any) {
-      console.error(error);
-      throw new Error(error);
+      console.error("Translation generation failed:", error);
+      const message = error instanceof Error ? error.message : String(error);
+      res.status(500).json({ error: message });
     }
   }
 );
