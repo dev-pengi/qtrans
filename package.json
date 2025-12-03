@@ -18,7 +18,7 @@
     "watch": "nodemon src/server.ts",
     "build": "tsc -p . && cd client && npm run build && cd ..",
     "deploy": "yarn build && npm publish",
-    "dev:link": "npm link"
+    "dev:link": "yarn build && npm link"
   },
   "dependencies": {
     "@babel/parser": "^7.28.0",
