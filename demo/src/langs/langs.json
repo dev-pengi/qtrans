@@ -1,11 +1,10 @@
 {
   "languages": [
-    "en",
     "ar",
-    "fr",
-    "sq"
+    "en",
+    "fr"
   ],
-  "defaultLanguage": "sq",
+  "defaultLanguage": "en",
   "translations": {
     "en": {
       "en": "English",

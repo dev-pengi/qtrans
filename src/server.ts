@@ -91,7 +91,7 @@ export default async function startServer(options: ServerOptions) {
 
   console.log(
     kleur.blue(
-      `Starting the server on ${host}:${config.port} for ${config.name} project...`
+      `Starting HELLO the server on ${host}:${config.port} for ${config.name} project...`
     )
   );
 

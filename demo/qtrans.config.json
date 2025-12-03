@@ -1,7 +1,8 @@
 {
   "typeSafe": false,
   "llm_config": {
-    "model": "gemini",
+    "model": "gemini-2.5-flash",
+    "prompt_strategy": "negative_prompt",
     "api_key": "ENV.{{GEMINI_API_KEY}}"
   },
   "port": 6757,
