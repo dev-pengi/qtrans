@@ -29,6 +29,16 @@ export const updateTranslation = async (
   });
 };
 
+export const renameTranslationKey = async (
+  key: string,
+  newKey: string
+): Promise<void> => {
+  return handleFetch(`/api/translations/${key}/rename`, {
+    data: { newKey },
+    method: "PUT",
+  });
+};
+
 export const deleteTranslation = async (key: string) => {
   return handleFetch(`/api/translations/${key}`, {
     method: "DELETE",

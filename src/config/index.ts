@@ -209,6 +209,33 @@ export const modifyTranslation = (
   return { key, value: updatedTranslation };
 };
 
+export const renameTranslationKey = (oldKey: string, newKey: string) => {
+  const { translations } = mutableLanguagesConfig;
+
+  // Guard: check if the key exists or if the name isn't actually changing
+  if (!translations[oldKey] || oldKey === newKey) return;
+
+  updateMutableLanguagesConfig((prev) => {
+    const newTranslations: typeof prev.translations = {};
+
+    // Reconstruct the object key-by-key to preserve order
+    Object.keys(prev.translations).forEach((key) => {
+      if (key === oldKey) {
+        // When we hit the old key, insert the new key name with the old data
+        newTranslations[newKey] = prev.translations[oldKey];
+      } else {
+        // Otherwise, just copy the key-value pair as is
+        newTranslations[key] = prev.translations[key];
+      }
+    });
+
+    return {
+      ...prev,
+      translations: newTranslations,
+    };
+  });
+};
+
 export const removeTranslation = (key: string) => {
   const { translations } = mutableLanguagesConfig;
   updateMutableLanguagesConfig((prev) => {

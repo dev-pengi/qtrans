@@ -12,6 +12,7 @@ import {
   removeTranslation,
   modifyTranslation,
   config,
+  renameTranslationKey,
 } from "../config";
 import { AI_PROMPTS } from "../constants/prompts";
 
@@ -91,6 +92,38 @@ export const updateTranslation = asyncHandler(
       req.body.translation
     );
     res.json(newTranslation);
+  }
+);
+
+export const renameTranslation = asyncHandler(
+  async (req: Request, res: Response): Promise<void> => {
+    const { translationKey } = req.params;
+    const { newKey } = req.body;
+
+    if (!newKey) {
+      res.status(400).json({ error: "newKey is required in the request body" });
+      return;
+    }
+
+    const existing = getTranslationByKey(translationKey);
+    if (!existing) {
+      res.status(404).json({ error: "Translation not found" });
+      return;
+    }
+    const collisionCheck = getTranslationByKey(newKey);
+    if (collisionCheck) {
+      res.status(400).json({ error: `The key "${newKey}" already exists.` });
+      return;
+    }
+
+    renameTranslationKey(translationKey, newKey);
+
+    res.json({
+      message: "Key renamed successfully",
+      oldKey: translationKey,
+      newKey: newKey,
+      values: existing,
+    });
   }
 );
 

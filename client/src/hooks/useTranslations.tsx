@@ -5,6 +5,7 @@ import {
   fetchTranslation,
   deleteTranslation,
   updateTranslation,
+  renameTranslationKey,
 } from "src/api/translations";
 import { Translation, TranslationValue } from "src/types";
 
@@ -73,6 +74,30 @@ const useTranslations = () => {
     });
   };
 
+  const modifyTranslationKey = () => {
+    return useMutation<void, Error, { key: string; newKey: string }>({
+      mutationFn: async ({ key, newKey }) => {
+        const updated = await renameTranslationKey(key, newKey);
+        return updated; // return the updated translation
+      },
+      onSuccess: (_, { key, newKey }) => {
+        queryClient.setQueryData<Translation[]>(["translations"], (old) =>
+          old?.map((translation) =>
+            translation.key === key
+              ? { ...translation, key: newKey }
+              : translation
+          )
+        );
+        queryClient.setQueryData<Translation>(["translations", key], (old) => {
+          if (old) {
+            return { ...old, key: newKey };
+          }
+          return old;
+        });
+      },
+    });
+  };
+
   const removeTranslation = () => {
     return useMutation<null, Error, string>({
       mutationFn: (key: string) => deleteTranslation(key),
@@ -89,6 +114,7 @@ const useTranslations = () => {
     fetchTranslationByKey,
     createNewTranslation,
     modifyTranslation,
+    modifyTranslationKey,
     removeTranslation,
   };
 };

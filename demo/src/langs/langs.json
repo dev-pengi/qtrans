@@ -6,34 +6,10 @@
   ],
   "defaultLanguage": "en",
   "translations": {
-    "en": {
-      "en": "English",
-      "fr": "Anglais",
-      "ar": "الانجليزية",
-      "sq": "Anglisht"
-    },
-    "fr": {
-      "en": "French",
-      "fr": "Français",
-      "ar": "الفرنسية",
-      "sq": "Frëngjisht"
-    },
-    "ar": {
-      "en": "Arabic",
-      "fr": "arabe",
-      "ar": "العربية",
-      "sq": "Arabisht"
-    },
-    "cancel": {
-      "en": "Cancel",
-      "fr": "Annuler",
-      "ar": "إلغاء",
-      "sq": "Anulo"
-    },
-    "enabled": {
-      "en": "Enabled",
+    "enabled_but_not": {
+      "en": "Enabled???",
       "fr": "Activé",
-      "ar": "مفعل",
+      "ar": "ممكّن",
       "sq": "E aktivizuar"
     },
     "disabled": {
@@ -1064,7 +1040,7 @@
       "fr": "Paramètres",
       "ar": "الإعدادات"
     },
-    "display_language": {
+    "display_language_lolll": {
       "en": "Display Language",
       "fr": "Langue d'affichage",
       "ar": "لغة العرض"
@@ -1258,6 +1234,30 @@
       "en": "Logging out",
       "fr": "Déconnexion",
       "ar": "تسجيل الخروج"
+    },
+    "en4": {
+      "en": "English",
+      "fr": "Anglais",
+      "ar": "الانجليزية",
+      "sq": "Anglisht"
+    },
+    "1fr": {
+      "en": "French",
+      "fr": "Français",
+      "ar": "الفرنسية",
+      "sq": "Frëngjisht"
+    },
+    "ar33": {
+      "en": "Arabicgggg",
+      "fr": "arabe",
+      "ar": "العربية",
+      "sq": "Arabisht"
+    },
+    "cancel333": {
+      "en": "Cancel",
+      "fr": "Annuler",
+      "ar": "إلغاء",
+      "sq": "Anulo"
     }
   }
 }

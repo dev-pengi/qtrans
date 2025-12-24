@@ -6,6 +6,7 @@ import {
   updateTranslation,
   deleteTranslation,
   generateTranslations,
+  renameTranslation,
 } from "../controllers/translations.controller";
 
 const translationsRouter = Router();
@@ -17,6 +18,8 @@ translationsRouter
   .get(getTranslation)
   .patch(updateTranslation)
   .delete(deleteTranslation);
+
+translationsRouter.put("/:translationKey/rename", renameTranslation);
 
 translationsRouter.route("/").get(fetchAllTranslations).post(createTranslation);
 

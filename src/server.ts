@@ -27,11 +27,15 @@ interface ServerOptions {
 export default async function startServer(options: ServerOptions) {
   const { isDev } = options;
 
+  console.log(isDev);
+
   const host = process.env.QTRANS_HOST || options.host || "localhost";
 
   updateRootDir(
     isDev ? path.join(__dirname, `../${process.env.TEST_DIR}`) : process.cwd()
   );
+
+  console.log(rootDir);
 
   if (!rootDir) return;
   checkConfigFile();
@@ -105,6 +109,7 @@ export default async function startServer(options: ServerOptions) {
     res.json({ message: "API is working lol" });
   });
 
+  console.log(isDev);
   if (isDev) {
     const { createProxyMiddleware } = await import("http-proxy-middleware");
     app.use(

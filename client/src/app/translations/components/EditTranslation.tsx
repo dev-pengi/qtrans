@@ -1,5 +1,5 @@
 import { faWandMagicSparkles } from "@fortawesome/free-solid-svg-icons";
-import { FC, ReactNode, useEffect, useState } from "react";
+import { FC, ReactNode, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { generateTranslations } from "src/api";
 import { Button, Input, Modal } from "src/components";
@@ -23,7 +23,7 @@ const EditTranslation: FC<EditTranslationProps> = ({
 
   const [isGeneratingTranslations, setIsGeneratingTranslations] =
     useState(false);
-  const { modifyTranslation } = useTranslations();
+  const { modifyTranslation, modifyTranslationKey } = useTranslations();
 
   const resetInputs = () =>
     languages.reduce((acc, lang) => {
@@ -33,6 +33,8 @@ const EditTranslation: FC<EditTranslationProps> = ({
 
   const [languagesValues, setLanguagesValues] = useState(resetInputs());
   const [translationKey, setTranslationKey] = useState(translation.key);
+
+  const oldTranslationKey = useRef(translation.key);
 
   const updateTranslationKey = (value: string) => {
     const maskedValue = value
@@ -92,6 +94,8 @@ const EditTranslation: FC<EditTranslationProps> = ({
   };
 
   const updateTranslationMutation = modifyTranslation();
+  const updateTranslationKeyMutation = modifyTranslationKey();
+
   const saveTranslation = () => {
     if (!translationKey) return toast.error("Translation key must be provided");
     if (!languagesValues[defaultLanguage])
@@ -99,9 +103,24 @@ const EditTranslation: FC<EditTranslationProps> = ({
         `Default language (${languagesCodeMap[defaultLanguage].Name}) must be provided`
       );
 
+    if (oldTranslationKey.current !== translationKey) {
+      updateTranslationKeyMutation.mutate(
+        {
+          key: oldTranslationKey.current,
+          newKey: translationKey,
+        },
+        {
+          onSuccess: () => {
+            toast.success("Translation key has been successfully updated");
+            oldTranslationKey.current = translationKey;
+          },
+        }
+      );
+    }
+
     updateTranslationMutation.mutate(
       {
-        key: translation.key,
+        key: translationKey,
         updatedTranslation: languagesValues,
       },
       {
@@ -144,14 +163,13 @@ const EditTranslation: FC<EditTranslationProps> = ({
             id={"translation-key"}
             value={translationKey}
             placeholder="translation_key"
-            disabled
           />
           <h4 className="text-[13px] py-2 px-1 text-gray-2">
-            <span className="text-accent font-semibold">NOTE: </span> Editing
-            the translation key is not allowed.
+            <span className="text-accent font-semibold">TIP: </span> You can use
+            the default language as context for auto generation
           </h4>
         </div>
-        <div className="flex flex-col gap-3 mt-5">
+        <div className="flex flex-col gap-3 mt-3">
           {languages
             .sort((a, b) => {
               const aDefault = defaultLanguage === a;
