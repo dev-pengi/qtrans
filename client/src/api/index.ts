@@ -14,5 +14,6 @@
 
 
 export { default as fetch } from './fetch.ts';
+export * from './llm.ts';
 export * from './settings.ts';
 export * from './translations.ts';

@@ -1,12 +1,13 @@
 import { faGears } from "@fortawesome/free-solid-svg-icons";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { configureLanguages } from "src/api";
 import { Button, Modal, MultiSelect, SelectMenu } from "src/components";
 import { languagesCodeMap } from "src/constants";
 import { useSettingsContext } from "src/contexts";
 import { useModalRef } from "src/hooks";
-import { Language } from "src/types";
+import { AvailableProviders, Language } from "src/types";
+import { fetchProviders } from "src/api";
 
 const SettingsConfiguration: FC = () => {
   const configurationsModal = useModalRef();
@@ -25,7 +26,26 @@ const SettingsConfiguration: FC = () => {
     setSelectedLanguages(config.languages);
   };
 
-  const handleSave = async () => {
+  const [providers, setProviders] = useState<AvailableProviders | null>(null);
+  const [selectedProvider, setSelectedProvider] = useState("gemini");
+
+  useEffect(() => {
+  const loadProviders = async () => {
+    try {
+      const data = await fetchProviders();
+      setProviders(data);
+      //console.log(data)
+      console.log(selectedProvider)
+    } catch (error) {
+      toast.error("Failed to load AI providers");
+    }
+  };
+
+  loadProviders();
+}, [selectedProvider]);
+
+
+  const handleSave= async () => {
     setIsSaving(true);
     try {
       const data = {
@@ -124,6 +144,19 @@ const SettingsConfiguration: FC = () => {
           >
             {selectedLanguages.length} Language Selected
           </MultiSelect>
+         <SelectMenu
+              label="AI Provider"
+              options={
+                providers
+                  ? Object.entries(providers).map(([key, provider]) => ({
+                      value: key,
+                      label:  `${provider.name} - ${provider.model}`,
+                    }))
+                  : []
+              }
+              activeOption={selectedProvider}
+              onSelect={(option) => setSelectedProvider(option.value)}
+            />
         </div>
       </Modal>
     </>

@@ -24,3 +24,16 @@ export type Config = ConfigBase &
     typeSafe?: boolean;
     llm_config?: LLMConfig;
   }>;
+
+
+export type Provider = "gemini" | "openai" | "anthropic";
+
+export type AvailableProvider = {
+  name: string;
+  model: string;
+};
+
+export type AvailableProviders = Record<
+  Provider,
+  AvailableProvider
+>;

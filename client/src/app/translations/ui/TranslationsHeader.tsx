@@ -36,7 +36,7 @@ const TranslationsHeader: FC = () => {
             <>
               {" - "}{" "}
               <span className="text-accent">
-                {translations.length} translation
+                {translations.length ?? 0} translation
                 {translations.length > 1 ? "s" : ""}
               </span>{" "}
               created

@@ -15,6 +15,9 @@ import {
   renameTranslationKey,
 } from "../config";
 import { AI_PROMPTS } from "../constants/prompts";
+import { createProvider } from "../providers/provider.factory";
+
+
 
 export const fetchAllTranslations = asyncHandler(
   async (_req: Request, res: Response): Promise<void> => {
@@ -148,9 +151,16 @@ export const generateTranslations = asyncHandler(
       throw new Error("prompt is required");
     }
 
-    const llmConfig = config.llm_config;
+  const llmConfig = config.llm_config; 
 
-    if (!llmConfig || !llmConfig.api_key) {
+  if (!llmConfig || !llmConfig.active_provider) {
+  res.status(400).send("Please configure llm_config and select a provider in the Qtrans config file");
+  return;
+}
+
+const providerSettings = llmConfig.providers[llmConfig.active_provider];
+
+   if (!providerSettings || !providerSettings.api_key) {
       res
         .status(400)
         .send(
@@ -159,56 +169,23 @@ export const generateTranslations = asyncHandler(
       return;
     }
 
-    if (!llmConfig.model) llmConfig.model = "gemini-2.5-flash";
 
     if (!llmConfig.prompt_strategy)
       llmConfig.prompt_strategy = "negative_prompt";
 
     try {
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${llmConfig.model}:generateContent?key=${llmConfig.api_key}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            contents: [
-              {
-                parts: [
-                  {
-                    text: `${
-                      AI_PROMPTS[llmConfig.prompt_strategy]
-                    } HERE IS THE PROMPT:\n\n\n${JSON.stringify(prompt)}`,
-                  },
-                ],
-              },
-            ],
-          }),
-        }
+      const provider = createProvider(llmConfig);
+
+      const generatedResponse = await provider.generateContent(
+        `${AI_PROMPTS[llmConfig.prompt_strategy]}HERE IS THE PROMPT:${JSON.stringify(prompt)}`
       );
 
-      const data = await response.json();
+      const cleanedResponse = generatedResponse.replace(
+        /```[a-zA-Z0-9]*\n|\n```/g,
+        ""
+      );
 
-      if (data.error) {
-        throw new Error(
-          `Gemini API Error: ${
-            data.error.message || JSON.stringify(data.error)
-          }`
-        );
-      }
-
-      if (!data.candidates || !data.candidates[0]) {
-        throw new Error("No candidates returned from Gemini API");
-      }
-
-      const generatedResponse =
-        data.candidates[0].content.parts[0].text.replace(
-          /```[a-zA-Z0-9]*\n|\n```/g,
-          ""
-        );
-
-      const jsonData = JSON.parse(generatedResponse);
+      const jsonData = JSON.parse(cleanedResponse);
 
       res.status(200).send(jsonData);
     } catch (error: any) {

@@ -6,6 +6,9 @@ import * as fs from "fs";
 import { delay } from "./utils/time.util";
 import inquirer from "inquirer";
 
+import { AVAILABLE_PROVIDERS, DEFAULT_PROVIDER } from "./providers/provider.config";
+import { Provider } from "./types";
+
 function ensureDirectoryExists(dirPath: string) {
   const basePath = process.cwd();
   const fullPath = path.resolve(basePath, dirPath);
@@ -79,10 +82,44 @@ export default async function init() {
     },
   ]);
 
+  //prompt to choose a provider and enter api keu
+  const providerAnswers = await inquirer.prompt([
+  {
+    type: "list",
+    name: "provider",
+    message: `Which AI provider do you want to use?`,
+    choices: Object.entries(AVAILABLE_PROVIDERS).map(([key, p]) => ({
+      name: key === DEFAULT_PROVIDER ? `${p.name} (default)` : p.name,
+      value: key,
+    })),
+    default: DEFAULT_PROVIDER,
+  },
+  {
+    type: "input",
+    name: "model",
+    message: (ans: any) =>
+      `Model to use? (default: ${AVAILABLE_PROVIDERS[ans.provider as Provider].model})`,
+    default: (ans: any) => AVAILABLE_PROVIDERS[ans.provider as Provider].model,
+  },
+  {
+    type: "input",
+    name: "envVar",
+    message: "Enter the environment variable name for your API key:",
+    default: (ans: any) => `API_KEY_${String(ans.provider).toUpperCase()}`,
+  },
+]);
+
+
+
+
   console.log("\nYou have selected the following options:");
   console.log(kleur.yellow(`Setup Directory: `), answers.setup_directory);
   console.log(kleur.yellow(`Project Name: `), answers.project_name);
   console.log(kleur.yellow(`Type Safe: `), answers.typeSafe ? "Yes" : "No");
+  console.log(
+  kleur.yellow(`AI Provider: `),
+  `${AVAILABLE_PROVIDERS[providerAnswers.provider as Provider].name} (${providerAnswers.model})`
+);
 
   const confirm = await inquirer.prompt([
     {
@@ -124,11 +161,22 @@ export default async function init() {
   const configFileName = "qtrans.config.json";
   const configFilePath = path.resolve(currentDir, configFileName);
   const config = {
-    name: answers.project_name,
-    location: answers.setup_directory,
-    port: 6757,
-    typeSafe: answers.typeSafe,
-  };
+  name: answers.project_name,
+  location: answers.setup_directory,
+  port: 6757,
+  typeSafe: answers.typeSafe,
+  llm_config: {
+  active_provider: providerAnswers.provider,
+  providers: {
+    [providerAnswers.provider]: {
+      model: providerAnswers.model,
+      api_key:`ENV.{{${providerAnswers.envVar}}}`
+    }
+  }
+}
+};
+
+
 
   fs.writeFileSync(configFilePath, JSON.stringify(config, null, 2));
 

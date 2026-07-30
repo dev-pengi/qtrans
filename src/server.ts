@@ -15,6 +15,7 @@ import {
 import { initPort } from "./utils/port.util";
 import settingsRouter from "./routes/settings";
 import { checkConfigFile } from "./utils/validate.util";
+import llmRouter from "./routes/llm";
 
 dotenv.config();
 
@@ -104,6 +105,7 @@ export default async function startServer(options: ServerOptions) {
   app.use(express.json());
   app.use("/api/translations", translationsRouter);
   app.use("/api/settings", settingsRouter);
+  app.use("/api/llm" , llmRouter)
 
   app.get("/api", (_req, res) => {
     res.json({ message: "API is working lol" });

@@ -24,3 +24,5 @@ export { default as SearchInput } from './inputs/SearchInput.tsx';
 export { default as ActivityIndicator } from './loaders/ActivityIndicator.tsx';
 export * from './popups/DropdownBase.tsx';
 export { default as Modal } from './popups/Modal.tsx';
+export * from './styles/button.styles.ts';
+export * from './styles/input.styles.ts';

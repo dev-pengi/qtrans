@@ -4,11 +4,17 @@ export type ConfigBase = {
   location: string;
 };
 
-type Model = "gemini-1.5-flash" | "gemini-2.5-flash";
+
+export type Provider = "openai" | "gemini" | "anthropic"
+
+export type ProviderSettings = {
+  model: string;
+  api_key: string;
+}
 
 export type LLMConfig = {
-  model: Model;
-  api_key: string;
+  active_provider: Provider;
+  providers: Partial<Record<Provider, ProviderSettings>>;
   prompt_strategy?: PromptStrategy;
 };
 
