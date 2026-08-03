@@ -97,7 +97,7 @@ export const checkConfigFile = () => {
   const watchConfigFile = () => {
     if (!rootDir) return;
     const configFilePath = path.join(rootDir, "qtrans.config.json");
-    const debouncedUpdate = debounce(() => {
+   const debouncedUpdate = debounce(() => {
       console.log(
         kleur.yellow("detected changes in qtrans.config.json. updating...")
       );

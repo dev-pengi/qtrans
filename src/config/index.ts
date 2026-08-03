@@ -2,7 +2,9 @@ import dotenv from "dotenv";
 import path from "path";
 import * as fs from "fs";
 import kleur from "kleur";
-import { Config } from "../types";
+import { Config, Provider } from "../types";
+import { AVAILABLE_PROVIDERS } from "../providers/provider.config";
+
 
 export let rootDir: string | undefined = undefined;
 export let updateRootDir = (dir: string) => {
@@ -67,6 +69,23 @@ export let updateConfig = (
   let newConfig = callback(config) || config;
   newConfig = replaceSecrets(newConfig);
   config = newConfig;
+  //console.log("updateConfig called");
+};
+
+
+
+const saveRawConfig = (newConfig: Config) => {
+  if (!rootDir) {
+    throw new Error("Root directory is missing.");
+  }
+
+  const configFilePath = path.join(rootDir, "qtrans.config.json");
+
+  fs.writeFileSync(
+    configFilePath,
+    JSON.stringify(newConfig, null, 2),
+    "utf-8"
+  );
 };
 
 export let mutableLanguagesConfig: TranslationSchema = {
@@ -294,4 +313,62 @@ export const setLanguages = ({
     languages,
     defaultLanguage,
   }));
+};
+
+
+
+/*
+export const setLLMProvider = (provider: Provider) =>{
+
+  updateConfig((prev)=>{
+    if(!prev.llm_config){
+      throw new Error('LLM config is missing')
+    }
+
+    return{
+      ...prev , 
+      llm_config:{
+        ...prev.llm_config, 
+        active_provider: provider
+      }
+    }
+  })
+}*/
+
+export const setLLMProvider = (provider: Provider) => {
+  if (!rootDir) {
+    throw new Error("Root directory is missing.");
+  }
+
+  const configFilePath = path.join(rootDir, "qtrans.config.json");
+
+  const rawConfig = JSON.parse(
+    fs.readFileSync(configFilePath, "utf-8")
+  ) as Config;
+
+  const providerDefaults = AVAILABLE_PROVIDERS[provider];
+
+  const existingProviders = rawConfig.llm_config?.providers ?? {};
+
+  const updatedConfig: Config = {
+    ...rawConfig,
+    llm_config: {
+      active_provider: provider,
+      prompt_strategy: rawConfig.llm_config?.prompt_strategy,
+      providers: {
+        ...existingProviders,
+
+        // preserve existing settings if already configured.
+        [provider]: existingProviders[provider] ?? {
+          model: providerDefaults.model,
+          api_key: `ENV.{{${providerDefaults.envVar}}}`,
+        },
+      },
+    },
+  };
+
+  saveRawConfig(updatedConfig);
+
+  // Update the runtime config as well.
+  updateConfig(() => updatedConfig);
 };

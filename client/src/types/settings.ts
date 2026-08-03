@@ -7,9 +7,27 @@ export type ConfigBase = {
 };
 
 export type LLMConfig = {
+  active_provider: Provider;
+  providers: Partial<Record<Provider, ProviderSettings>>;
+ 
+};
+
+export type Provider = "gemini" | "openai" | "anthropic";
+
+export type AvailableProvider = {
+  name: string;
+  model: string;
+};
+
+export type AvailableProviders = Record<
+  Provider,
+  AvailableProvider
+>;
+
+export type ProviderSettings = {
   model: string;
   api_key: string;
-};
+}
 
 export type Language = keyof typeof languagesCodeMap;
 
@@ -24,3 +42,5 @@ export type Config = ConfigBase &
     typeSafe?: boolean;
     llm_config?: LLMConfig;
   }>;
+
+
