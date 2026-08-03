@@ -1,5 +1,6 @@
 import Joi, { CustomHelpers } from "joi";
 
+
 export const languagesValidator = Joi.object({
   languages: Joi.array().items(Joi.string()).required(),
   defaultLanguage: Joi.string()
@@ -14,3 +15,11 @@ export const languagesValidator = Joi.object({
       return value;
     }),
 });
+
+//const provider : Provider[] = ["gemini", "openai", "anthropic"]
+
+export const llmValidator = Joi.object({
+  active_provider: Joi.string()
+  .valid("gemini", "openai", "anthropic")
+  .required()
+})

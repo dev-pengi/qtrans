@@ -5,11 +5,11 @@ dotenv.config({ path: ".env.test" });
 //console.log(process.env.GEMINI_API_KEY);
 
 const run = async () => {
-	const provider = new GeminiProvider(process.env.GEMINI_API_KEY!, "gemini-2.5-pro");
+	const provider = new GeminiProvider(process.env.GEMINI_API_KEY!, "gemini-2.5-flash");
 	const result = await provider.generateContent(
-		'Respond with ONLY this raw JSON',
+		'Respond with exactly: Hello from Google Gemini',
 	);
-	console.log("RAW OUTPUT:", result);
+	console.log( result);
 };
 
 run().catch(console.error);

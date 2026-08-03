@@ -5,8 +5,9 @@ import {
   getDefaultLanguage,
   config,
   setLanguages,
+  setLLMProvider,
 } from "../config";
-import { languagesValidator } from "../validators/settings.validator";
+import { languagesValidator, llmValidator } from "../validators/settings.validator";
 
 export const fetchConfig = asyncHandler(
   async (_req: Request, res: Response): Promise<void> => {
@@ -28,5 +29,23 @@ export const configureLanguages = asyncHandler(
 
     setLanguages(req.body);
     res.status(200).send(null);
+  }
+);
+
+export const configureLLM = asyncHandler(
+  async (req: Request, res: Response): Promise<void> => {
+    console.log(req.body);
+
+    const validation = llmValidator.validate(req.body);
+
+    if (validation.error) {
+      throw new Error(validation.error.message);
+    }
+
+    const { active_provider } = req.body;
+
+    setLLMProvider(active_provider);
+
+    res.sendStatus(200);
   }
 );

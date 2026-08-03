@@ -6,14 +6,14 @@ dotenv.config({ path: ".env.test" });
 const run = async () => {
   const provider = new OpenAiProvider(
     process.env.OPENAI_API_KEY!,
-    "gpt-5-nano"
+    "gpt-4o-mini"
   );
 
   const result = await provider.generateContent(
     "Respond with exactly: Hello from OpenAI"
   );
 
-  console.log("RAW OUTPUT:", result);
+  console.log( result);
 };
 
 run().catch(console.error);
