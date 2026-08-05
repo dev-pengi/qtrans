@@ -44,6 +44,10 @@ export const SettingsContextProvider: FC<SettingsContextProviderProps> = ({
     name: "Qtrans",
     port: 0,
     location: "",
+      llm_config: {
+    active_provider: "gemini",
+    providers: {},
+  },
   });
 
   const [searchKeyword, setSearchKeyword] = useState("");
