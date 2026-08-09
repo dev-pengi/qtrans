@@ -16,7 +16,7 @@ import {
 } from "../config";
 import { AI_PROMPTS } from "../constants/prompts";
 import { createProvider } from "../providers/provider.factory";
-
+import { validatePlaceholders } from "../validators/placeholder.validator";
 
 
 export const fetchAllTranslations = asyncHandler(
@@ -186,6 +186,19 @@ const providerSettings = llmConfig.providers[llmConfig.active_provider];
       );
 
       const jsonData = JSON.parse(cleanedResponse);
+      const sourceTranslation = prompt.providedValues?.en
+
+      if (sourceTranslation) {
+       for (const [language, translation] of Object.entries(jsonData)) {
+        if (typeof translation === "string" &&
+      !validatePlaceholders(sourceTranslation, translation)
+    ) {
+      throw new Error(
+        `Placeholder mismatch in "${language}" translation`
+      );
+    }
+  }
+}
 
       res.status(200).send(jsonData);
     } catch (error: any) {

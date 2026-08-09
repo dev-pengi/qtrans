@@ -5,20 +5,7 @@ export const extractPlaceholders = (str: string): string[] => {
 	return [...new Set([...matches].map((m) => m[1]))];
 };
 
-
-// function converts an array of placeholder names into a ts string representation.
-/*export const placeholdersToTypeString = (names: string[]): string => {
-  if (names.length === 0) return "Record<string, never>";
-  return `{ ${names.map((n) => `"${n}": string | number`).join("; ")} }`;
-};*/
-
-
-
-
-// Converts placeholder names into a tuple type.
-// ["user.name", "user.age"] ->
-// [userName: string | number, userAge: string | number]
-
+// make generated tuples readble in typescript == testing purposes 
 const placeholderToLabel = (path: string) => {
   return path
     .split(".")
@@ -30,6 +17,11 @@ const placeholderToLabel = (path: string) => {
     .join("");
 };
 
+
+
+// Converts placeholder names into a tuple type
+// ["user.name", "user.age"] ->
+// [userName: string | number, userAge: string | number]
 export const placeholdersToTupleType = (names: string[]): string => {
   if (names.length === 0) return "[]";
 
@@ -41,6 +33,16 @@ export const placeholdersToTupleType = (names: string[]): string => {
       )
       .join(",\n    ")}
   ]`;
+};
+
+
+
+// for validation purposes 
+export const extractPlaceholderOccurrences = (
+  str: string
+): string[] => {
+  const matches = str.matchAll(/\{([\w.]+)\}/g);
+  return [...matches].map((m) => m[1]);
 };
 
 
