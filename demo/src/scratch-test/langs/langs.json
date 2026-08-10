@@ -1,0 +1,1264 @@
+{
+  "languages": [
+    "en",
+    "ar",
+    "fr",
+    "af"
+  ],
+  "defaultLanguage": "en",
+  "translations": {
+    "enabled_but_not": {
+      "en": "Enabled???",
+      "fr": "Activé",
+      "ar": "ممكّن",
+      "sq": "E aktivizuar"
+    },
+    "disabled": {
+      "en": "Disabled",
+      "fr": "Désactivé",
+      "ar": "معطل",
+      "sq": "Efikasizuar"
+    },
+    "confirm": {
+      "en": "Confirm",
+      "fr": "Confirmer",
+      "ar": "تأكيد",
+      "sq": "Konfirmo"
+    },
+    "delete": {
+      "en": "Delete",
+      "fr": "Supprimer",
+      "ar": "حذف",
+      "sq": "Fshij"
+    },
+    "remove": {
+      "en": "Remove",
+      "fr": "Supprimer",
+      "ar": "إزالة",
+      "sq": "Hiq"
+    },
+    "save": {
+      "en": "Save",
+      "fr": "Enregistrer",
+      "ar": "حفظ",
+      "sq": "Ruaj"
+    },
+    "edit": {
+      "en": "Edit",
+      "fr": "Modifier",
+      "ar": "تعديل",
+      "sq": "Redakto"
+    },
+    "year": {
+      "en": "Year",
+      "fr": "Année",
+      "ar": "سنة",
+      "sq": "Vit"
+    },
+    "month": {
+      "en": "Month",
+      "fr": "Mois",
+      "ar": "شهر",
+      "sq": "Muaj"
+    },
+    "day": {
+      "en": "Day",
+      "fr": "Jour",
+      "ar": "يوم",
+      "sq": "Ditë"
+    },
+    "or": {
+      "en": "OR",
+      "fr": "OU",
+      "ar": "أو",
+      "sq": "OSE"
+    },
+    "download": {
+      "en": "Download",
+      "fr": "Télécharger",
+      "ar": "تحميل",
+      "sq": "Shkarko"
+    },
+    "person": {
+      "en": "Person",
+      "fr": "Personne",
+      "ar": "شخص",
+      "sq": "Person"
+    },
+    "datetime": {
+      "en": "Date and Time",
+      "fr": "Date et l'heure",
+      "ar": "التاريخ والوقت",
+      "sq": "Data dhe Ora"
+    },
+    "save_changes": {
+      "en": "Save Changes",
+      "fr": "Sauvegarder les modifications",
+      "ar": "حفظ التغييرات",
+      "sq": "Ruaj ndryshimet"
+    },
+    "total_users": {
+      "en": "Total Users",
+      "fr": "Total des employés",
+      "ar": "إجمالي المستخدمين",
+      "sq": "Përdoruesit e përgjithshëm"
+    },
+    "signed_in_users": {
+      "en": "Signed In Users",
+      "fr": "Employés connectés",
+      "ar": "المستخدمون المسجلون",
+      "sq": "Përdorues të kyçur"
+    },
+    "dashboard_users_section_title": {
+      "en": "Users",
+      "fr": "Employés",
+      "ar": "المستخدمون",
+      "sq": "Përdoruesit"
+    },
+    "create_user": {
+      "en": "Add a User",
+      "fr": "Ajouter un utilisateur",
+      "ar": "إضافة مستخدم",
+      "sq": "Shto një përdorues"
+    },
+    "create_user_title": {
+      "en": "Add New User",
+      "fr": "Ajouter un nouvel employé",
+      "ar": "إضافة مستخدم جديد",
+      "sq": "Shto përdorues të ri"
+    },
+    "create_user_note": {
+      "en": "Fill in the information below to add a new user",
+      "fr": "Remplissez les informations ci-dessous pour ajouter un nouvel employé",
+      "ar": "املأ المعلومات أدناه لإضافة مستخدم جديد",
+      "sq": "Plotësoni informacionet e mëposhtme për të shtuar një përdorues të ri"
+    },
+    "sites_access": {
+      "en": "Sites Access",
+      "fr": "Accès aux sites",
+      "ar": "وصول المواقع",
+      "sq": "Qasja e faqeve"
+    },
+    "full_sites_access": {
+      "en": "Full Access",
+      "fr": "Accès total",
+      "ar": "وصول كامل",
+      "sq": "Qasje e plotë"
+    },
+    "limited_sites_access": {
+      "en": "Limited Sites",
+      "fr": "Sites limités",
+      "ar": "مواقع محدودة",
+      "sq": "Qasje të kufizuara në vende"
+    },
+    "email": {
+      "en": "Email",
+      "fr": "Email",
+      "ar": "البريد الإلكتروني",
+      "sq": "Email"
+    },
+    "password": {
+      "en": "Password",
+      "fr": "Mot de passe",
+      "ar": "كلمة المرور",
+      "sq": "Fjalëkalimi"
+    },
+    "username": {
+      "en": "Username",
+      "fr": "Nom d'utilisateur",
+      "ar": "اسم المستخدم",
+      "sq": "Emri i përdoruesit"
+    },
+    "first_name": {
+      "en": "First Name",
+      "fr": "Prénom",
+      "ar": "الاسم الأول",
+      "sq": "Emri i parë"
+    },
+    "last_name": {
+      "en": "Last Name",
+      "fr": "Nom de famille",
+      "ar": "اسم العائلة",
+      "sq": "Mbiemri"
+    },
+    "create_user_submit": {
+      "en": "Add User",
+      "fr": "Ajouter l'employé",
+      "ar": "إضافة مستخدم",
+      "sq": "Shto përdoruesin"
+    },
+    "search_users_placeholder": {
+      "en": "Search Users",
+      "fr": "Rechercher des employés",
+      "ar": "البحث عن المستخدمين",
+      "sq": "Kërko përdoruesit"
+    },
+    "table_view": {
+      "en": "Table View",
+      "fr": "Vue de la table",
+      "ar": "عرض الجدول",
+      "sq": "Pamje e tabelës"
+    },
+    "card_view": {
+      "en": "Card View",
+      "fr": "Vue de la carte",
+      "ar": "عرض البطاقة",
+      "sq": "Pamje e Kartës"
+    },
+    "table_user": {
+      "en": "User",
+      "fr": "Utilisateur",
+      "ar": "المستخدم",
+      "sq": "Përdoruesi"
+    },
+    "role": {
+      "en": "Role",
+      "fr": "Rôle",
+      "ar": "الدور",
+      "sq": "Roli"
+    },
+    "created_at": {
+      "en": "Created At",
+      "fr": "Créé à",
+      "ar": "تاريخ الإنشاء",
+      "sq": "Krijuar në"
+    },
+    "status": {
+      "en": "Status",
+      "fr": "Statut",
+      "ar": "الحالة",
+      "sq": "Statusi"
+    },
+    "latitude": {
+      "en": "latitude",
+      "fr": "latitude",
+      "ar": "خط العرض",
+      "sq": "gjerësi gjeografike"
+    },
+    "longitude": {
+      "en": "longitude",
+      "fr": "longitude",
+      "ar": "خط الطول",
+      "sq": "gjatesi gjeografike"
+    },
+    "user_actions_profile": {
+      "en": "View Profile",
+      "fr": "Voir le profil",
+      "ar": "عرض الملف الشخصي",
+      "sq": "Shiko Profilin"
+    },
+    "user_actions_edit": {
+      "en": "Edit User",
+      "fr": "Modifier l'employé",
+      "ar": "تعديل المستخدم",
+      "sq": "Modifiko përdoruesin"
+    },
+    "user_actions_copy_id": {
+      "en": "Copy User ID",
+      "fr": "Copier l'ID utilisateur",
+      "ar": "نسخ معرف المستخدم",
+      "sq": "Kopjo ID e përdoruesit"
+    },
+    "user_actions_copy_id_successful": {
+      "en": "Id copied to clipboard",
+      "fr": "ID copié dans le presse-papiers",
+      "ar": "تم نسخ المعرف إلى الحافظة",
+      "sq": "ID-ja u kopjua në bordin e prerjes"
+    },
+    "user_actions_edit_form_note": {
+      "en": "Fill in the information below to edit this user",
+      "fr": "Remplissez les informations ci-dessous pour modifier cet employé",
+      "ar": "املأ المعلومات أدناه لتعديل هذا المستخدم",
+      "sq": "Plotësoni informacionet e mëposhtme për të modifikuar këtë përdorues"
+    },
+    "user_actions_edit_success": {
+      "en": "User updated successfully",
+      "fr": "Employé mis à jour avec succès",
+      "ar": "تم تحديث المستخدم بنجاح",
+      "sq": "Përdoruesi u përditësua me sukses"
+    },
+    "user_actions_edit_error": {
+      "en": "Error updating user",
+      "fr": "Erreur lors de la mise à jour de l'employé",
+      "ar": "خطأ في تحديث المستخدم",
+      "sq": "Gabim gjatë përditësimit të përdoruesit"
+    },
+    "user_actions_delete": {
+      "en": "Delete User",
+      "fr": "Supprimer l'employé",
+      "ar": "حذف المستخدم",
+      "sq": "Fshij Përdoruesin"
+    },
+    "user_actions_self_delete": {
+      "en": "Delete Your Account",
+      "fr": "Supprimer votre compte",
+      "ar": "حذف حسابك",
+      "sq": "Fshi llogarinë tënde"
+    },
+    "user_actions_delete_confirm": {
+      "en": "Are you sure you want to delete this user? ({user.name})",
+      "fr": "Êtes-vous sûr de vouloir supprimer cet employé? ({user.name})",
+      "ar": "هل أنت متأكد أنك تريد حذف هذا المستخدم؟ ({user.name})",
+      "sq": "A jeni të sigurt që dëshironi ta fshini këtë përdorues?"
+    },
+    "user_actions_self_delete_confirm": {
+      "en": "Are you sure you want to delete your account? ({user.name}). This will log you out of the app and you won't be able to use the service until you login again",
+      "fr": "Êtes-vous sûr de vouloir supprimer votre compte? ({user.name}). Cela vous enregistrera de l'application et vous ne pourrez pas utiliser le service avant de vous connecter à nouveau",
+      "ar": "هل أنت متأكد أنك تريد حذف حسابك؟ ({user.name}). سيؤدي ذلك إلى تسجيل خروجك من التطبيق ولن تتمكن من استخدام الخدمة حتى تقوم بتسجيل الدخول مرة أخرى",
+      "sq": "A jeni i sigurt që dëshironi të fshini llogarinë tuaj? ({user.name}). Kjo do t'ju çkyçë nga aplikacioni dhe nuk do të mund të përdorni shërbimin derisa të hyni përsëri."
+    },
+    "user_actions_super_delete_error": {
+      "en": "The SUPER ACCESS account cannot be deleted",
+      "fr": "Le compte SUPER ACCESS ne peut pas être supprimé",
+      "ar": "لا يمكن حذف حساب SUPER ACCESS",
+      "sq": "Llogaria SUPER ACCESS nuk mund të fshihet."
+    },
+    "user_actions_delete_success": {
+      "en": "User deleted successfully",
+      "fr": "Employé supprimé avec succès",
+      "ar": "تم حذف المستخدم بنجاح",
+      "sq": "Përdoruesi u fshi me sukses"
+    },
+    "user_actions_delete_error": {
+      "en": "Error deleting user",
+      "fr": "Erreur lors de la suppression de l'employé",
+      "ar": "خطأ في حذف المستخدم",
+      "sq": "Gabim gjatë fshirjes së përdoruesit"
+    },
+    "dashboard_users_section_empty": {
+      "en": "No users added yet",
+      "fr": "Aucun employé ajouté pour le moment",
+      "ar": "لم تتم إضافة مستخدمين بعد",
+      "sq": "Nuk janë shtuar ende përdorues"
+    },
+    "change_password": {
+      "en": "Change Password",
+      "fr": "Changer le mot de passe",
+      "ar": "تغيير كلمة المرور",
+      "sq": "Ndrysho fjalëkalimin"
+    },
+    "language": {
+      "en": "Language",
+      "fr": "Langue",
+      "ar": "اللغة",
+      "sq": "Gjuha"
+    },
+    "theme": {
+      "en": "Light Theme",
+      "fr": "Thème Clair",
+      "ar": "الثيم الفاتح",
+      "sq": "Tema e lehtë"
+    },
+    "dashboard_settings_section_alerts_title": {
+      "en": "Alerts & Popups:",
+      "fr": "Alertes et popups :",
+      "ar": "التنبيهات والنوافذ المنبثقة:",
+      "sq": "Njoftimet dhe dritare të ngritura:"
+    },
+    "dashboard_settings_section_alerts_email": {
+      "en": "Send alerts as emails",
+      "fr": "Envoyer des alertes par e-mail",
+      "ar": "إرسال التنبيهات عبر البريد الإلكتروني",
+      "sq": "Dërgoni alarmet si email"
+    },
+    "dashboard_settings_section_alerts_email_report": {
+      "en": "Send Reports as emails",
+      "fr": "Envoyer des rapports par e-mail",
+      "ar": "إرسال التقارير عبر البريد الإلكتروني",
+      "sq": "Dërgoni raportet si email"
+    },
+    "dashboard_settings_section_alerts_sound": {
+      "en": "Alerts sounds",
+      "fr": "Sons d'alerte",
+      "ar": "أصوات التنبيهات",
+      "sq": "Tingujt e njoftimeve"
+    },
+    "dashboard_settings_section_alerts_popup": {
+      "en": "Popup Alerts",
+      "fr": "Alertes popup",
+      "ar": "التنبيهات المنبثقة",
+      "sq": "Njoftimet e dritares së dialogut"
+    },
+    "change_password_note": {
+      "en": "Please choose a strong unique password to protect your account",
+      "fr": "Veuillez choisir un mot de passe unique et fort pour protéger votre compte",
+      "ar": "يرجى اختيار كلمة مرور قوية وفريدة لحماية حسابك",
+      "sq": "Ju lutem zgjidhni një fjalëkalim të fortë dhe unik për të mbrojtur llogarinë tuaj"
+    },
+    "previous_password": {
+      "en": "Previous Password",
+      "fr": "Mot de passe précédent",
+      "ar": "كلمة المرور السابقة",
+      "sq": "Fjalëkalimi i mëparshëm"
+    },
+    "new_password": {
+      "en": "New Password",
+      "fr": "Nouveau mot de passe",
+      "ar": "كلمة المرور الجديدة",
+      "sq": "Fjalëkalimi i ri"
+    },
+    "confirm_password": {
+      "en": "Confirm Password",
+      "fr": "Confirmer le mot de passe",
+      "ar": "تأكيد كلمة المرور",
+      "sq": "Konfirmo fjalëkalimin"
+    },
+    "change_password_submit": {
+      "en": "Change Password",
+      "fr": "Changer",
+      "ar": "تغيير",
+      "sq": "Ndrysho fjalëkalimin"
+    },
+    "reset_settings": {
+      "en": "Reset Settings",
+      "fr": "Réinitialiser les paramètres",
+      "ar": "إعادة تعيين الإعدادات",
+      "sq": "Rikonfiguro Cilësimet"
+    },
+    "reset_settings_confirm": {
+      "en": "Are you sure you want to reset all settings?",
+      "fr": "Êtes-vous sûr de vouloir réinitialiser tous les paramètres?",
+      "ar": "هل أنت متأكد أنك تريد إعادة تعيين جميع الإعدادات؟",
+      "sq": "A jeni të sigurt që dëshironi të rivendosni të gjitha cilësimet?"
+    },
+    "reset_settings_success": {
+      "en": "Settings reset successfully",
+      "fr": "Paramètres réinitialisés avec succès",
+      "ar": "تم إعادة تعيين الإعدادات بنجاح",
+      "sq": "Konfigurimet u rivendosën me sukses"
+    },
+    "error_field_required": {
+      "en": "This field is required",
+      "fr": "Ce champ est requis",
+      "ar": "هذا الحقل مطلوب",
+      "sq": "Ky fushë është e detyrueshme"
+    },
+    "all_fields_required": {
+      "en": "All fields are required",
+      "fr": "Tous les champs sont requis",
+      "ar": "جميع الحقول مطلوبة",
+      "sq": "Të gjitha fushat janë të kërkuara"
+    },
+    "error_internal_server": {
+      "en": "Internal Server Error",
+      "fr": "Erreur interne du serveur",
+      "ar": "خطأ في الخادم الداخلي",
+      "sq": "Gabim i brendshëm i serverit"
+    },
+    "reset_settings_error": {
+      "en": "Error resetting settings",
+      "fr": "Erreur lors de la réinitialisation des paramètres",
+      "ar": "خطأ في إعادة تعيين الإعدادات",
+      "sq": "Gabim gjatë përpjekjes për të rivendosur cilësimet"
+    },
+    "users_search_filter": {
+      "en": "Search by ",
+      "fr": "Rechercher par: ",
+      "ar": "البحث عن طريق: ",
+      "sq": "Kërko sipas "
+    },
+    "upload_options": {
+      "en": "Upload Options",
+      "fr": "Options de photo",
+      "ar": "خيارات التحميل",
+      "sq": "Opcionet e ngarkimit"
+    },
+    "use_webcam": {
+      "en": "Use Webcam",
+      "fr": "Utiliser la webcam",
+      "ar": "استخدام كاميرا الويب",
+      "sq": "Përdor webkamerën"
+    },
+    "webcam_capture": {
+      "en": "Capture",
+      "fr": "Capturer",
+      "ar": "التقاط",
+      "sq": "Kapje"
+    },
+    "upload_file": {
+      "en": "Upload from files",
+      "fr": "Utiliser un fichier",
+      "ar": "تحميل من الملفات",
+      "sq": "Ngarkoni nga skedarët"
+    },
+    "webcam_error": {
+      "en": "Error while accessing webcam, please provide permission",
+      "fr": "Erreur lors de l'accès à la webcam, veuillez donner la permission",
+      "ar": "خطأ أثناء الوصول إلى كاميرا الويب، يرجى تقديم الإذن",
+      "sq": "Gabim gjatë aksesimit të kamerës me web, ju lutem jepni leje"
+    },
+    "password_mismatch": {
+      "en": "Passwords do not match",
+      "fr": "Les mots de passe ne correspondent pas",
+      "ar": "كلمات المرور غير متطابقة",
+      "sq": "Fjalëkalimet nuk përputhen"
+    },
+    "password_minimum_length": {
+      "en": "Password should be at least 8 characters",
+      "fr": "Le mot de passe doit contenir au moins 8 caractères",
+      "ar": "يجب أن تكون كلمة المرور مكونة من 8 أحرف على الأقل",
+      "sq": "Fjalëkalimi duhet të ketë të paktën 8 karaktere"
+    },
+    "no_access_re_login": {
+      "en": "Invalid Access, please re-login",
+      "fr": "Accès invalide, veuillez vous reconnecter",
+      "ar": "وصول غير صالح، يرجى إعادة تسجيل الدخول",
+      "sq": "Hyqes i pavlefshëm, ju lutem ri-hyni."
+    },
+    "user_delete_error": {
+      "en": "Error deleting user",
+      "fr": "Erreur de suppression de l'utilisateur",
+      "ar": "خطأ في حذف المستخدم",
+      "sq": "Gabim gjatë fshirjes së përdoruesit"
+    },
+    "site_created": {
+      "en": "Site added successfully",
+      "fr": "Site ajouté avec succès",
+      "ar": "تمت إضافة الموقع بنجاح",
+      "sq": "Faqja u krijua me sukses"
+    },
+    "site_name": {
+      "en": "Site name",
+      "fr": "Nom du site",
+      "ar": "اسم الموقع",
+      "sq": "Emri i faqes"
+    },
+    "site_description": {
+      "en": "Site Description",
+      "fr": "Description du site",
+      "ar": "وصف الموقع",
+      "sq": "Përshkrimi i faqes"
+    },
+    "site_location_name": {
+      "en": "Site location",
+      "fr": "l'emplacement du site",
+      "ar": "مكان الموقع",
+      "sq": "Vendodhja e faqes"
+    },
+    "site_coordinates": {
+      "en": "Site Coordinates",
+      "fr": "Coordonnées du site",
+      "ar": "احداثيات الموقع",
+      "sq": "Koordinatat e faqes"
+    },
+    "site_priority_level": {
+      "en": "Priority level",
+      "fr": "Niveau de priorité",
+      "ar": "مستوى الأولوية",
+      "sq": "Nivel i prioritetit"
+    },
+    "site_priority_level_input": {
+      "en": "Priority level (1 ~ 9)",
+      "fr": "Niveau de priorité (1 ~ 9)",
+      "ar": "مستوى الأولوية (1 ~ 9)",
+      "sq": "Nivel prioriteti (1 ~ 9)"
+    },
+    "priority_level_range_error": {
+      "en": "The priority level must be between 1 and 9",
+      "fr": "Le niveau de priorité doit être compris entre 1 et 9",
+      "ar": "يجب أن يكون مستوى الأولوية بين 1 و 9",
+      "sq": "Niveli i prioritetit duhet të jetë midis 1 dhe 9"
+    },
+    "add_site": {
+      "en": "New Site",
+      "fr": "Ajouter le site",
+      "ar": "إضافة موقع",
+      "sq": "Shto faqen"
+    },
+    "unknown": {
+      "en": "Unknown",
+      "fr": "Inconnue",
+      "ar": "غير معروف",
+      "sq": "E njohur"
+    },
+    "create_site_submit": {
+      "en": "Create Site",
+      "fr": "Créer un site",
+      "ar": "إنشاء موقع",
+      "sq": "Krijo faqen"
+    },
+    "create_site_title": {
+      "en": "Add New Site",
+      "fr": "Ajouter Un Nouveau Site",
+      "ar": "إضافة موقع جديد",
+      "sq": "Shto Një Faqen E Re"
+    },
+    "sites_management": {
+      "en": "Sites Management",
+      "fr": "Gestion des sites",
+      "ar": "إدارة المواقع",
+      "sq": "Menaxhimi i faqeve"
+    },
+    "create_site_note": {
+      "en": "Fill in the information below to add a new site",
+      "fr": "Remplissez les informations ci-dessous pour ajouter un nouveau site",
+      "ar": "املأ المعلومات أدناه لإضافة موقع جديد",
+      "sq": "Plotësoni informacionet e mëposhtme për të shtuar një vend të ri"
+    },
+    "no_sites_found": {
+      "en": "No sites have been added yet",
+      "fr": "Aucun site n'a encore été ajouté",
+      "ar": "لم تتم إضافة أي مواقع بعد",
+      "sq": "Nuk janë gjetur faqet"
+    },
+    "sites_fetch_error": {
+      "en": "Cannot fetch sites, please refresh the page",
+      "fr": "Impossible de récupérer les sites, veuillez actualiser la page",
+      "ar": "لا يمكن جلب المواقع، يرجى تحديث الصفحة",
+      "sq": "S'mund të marrë faqet e internetit, ju lutemi rifreskoni faqen"
+    },
+    "site_deleted": {
+      "en": "Site has been deleted successfully",
+      "fr": "Le site a été supprimé avec succès",
+      "ar": "تم حذف الموقع بنجاح",
+      "sq": "Faqja është fshirë me sukses"
+    },
+    "site_delete_error": {
+      "en": "Error deleting the site, try again later",
+      "fr": "Erreur de suppression du site, réessayez plus tard",
+      "ar": "خطأ في حذف الموقع، حاول مرة أخرى لاحقًا",
+      "sq": "Gabim gjatë fshirjes së faqes, provoni përsëri më vonë"
+    },
+    "site_action_delete": {
+      "en": "Delete Site",
+      "fr": "Supprimer le site",
+      "ar": "حذف الموقع",
+      "sq": "Fshij faqen"
+    },
+    "site_actions_delete_confirm": {
+      "en": "Are you sure you want to delete this site? ",
+      "fr": "Êtes-vous sûr de vouloir supprimer ce site? ",
+      "ar": "هل أنت متأكد من أنك تريد حذف هذا الموقع؟ ",
+      "sq": "A jeni të sigurt që dëshironi të fshini këtë faqe? "
+    },
+    "views": {
+      "en": "Views",
+      "fr": "Vues",
+      "ar": "الكاميرات"
+    },
+    "site_cameras": {
+      "en": "Site Cameras",
+      "fr": "Caméras de site",
+      "ar": "الكاميرات"
+    },
+    "empty_cameras": {
+      "en": "This site has no cameras installed yet",
+      "fr": "Ce site n'a pas encore de caméras installées",
+      "ar": "هذا الموقع لا يحتوي على كاميرات مثبتة بعد"
+    },
+    "map_loading": {
+      "en": "Loading the map... this could take a few seconds!",
+      "fr": "Chargement de la carte... cela pourrait prendre quelques secondes!",
+      "ar": "جارٍ تحميل الخريطة... قد يستغرق ذلك بضع ثوانٍ!"
+    },
+    "location_on_map": {
+      "en": "Location on map",
+      "fr": "Localisation sur la carte",
+      "ar": "الموقع على الخريطة"
+    },
+    "pick_location": {
+      "en": "Pick location on the map",
+      "fr": "Choisissez l'emplacement sur la carte",
+      "ar": "اختر الموقع على الخريطة"
+    },
+    "map_pick_tools_title": {
+      "en": "Pick a location",
+      "fr": "Choisir un emplacement",
+      "ar": "اختر موقعًا"
+    },
+    "zoom_level": {
+      "en": "Zoom level",
+      "fr": "Le niveau de zoom",
+      "ar": "مستوى التكبير"
+    },
+    "sites_map_title": {
+      "en": "Sites Map",
+      "fr": "Carte des sites",
+      "ar": "خريطة المواقع"
+    },
+    "add_camera": {
+      "en": "Add Camera",
+      "fr": "Ajouter une caméra",
+      "ar": "إضافة كاميرا"
+    },
+    "new_camera_title": {
+      "en": "Create New Camera",
+      "fr": "Créer une nouvelle caméra",
+      "ar": "إنشاء كاميرا جديدة"
+    },
+    "submit_camera": {
+      "en": "Create",
+      "fr": "Créer",
+      "ar": "إنشاء"
+    },
+    "create_camera_note": {
+      "en": "Fill in the information below to add a new camera",
+      "fr": "Remplissez les informations ci-dessous pour ajouter une nouvelle caméra",
+      "ar": "املأ المعلومات أدناه لإضافة كاميرا جديدة"
+    },
+    "camera_name": {
+      "en": "Camera Name",
+      "fr": "Nom de l'appareil photo",
+      "ar": "اسم الكاميرا"
+    },
+    "camera_stream_url": {
+      "en": "Stream URL",
+      "fr": "URL du source",
+      "ar": "رابط البث"
+    },
+    "alerts_page_title": {
+      "en": "Alerts & Events",
+      "fr": "Alertes et événements",
+      "ar": "التنبيهات والأحداث"
+    },
+    "unsolved_issues": {
+      "en": "Unsolved Issues",
+      "fr": "Problèmes non résolus",
+      "ar": "المشاكل غير المحلولة"
+    },
+    "solved_issues": {
+      "en": "Solved Issues",
+      "fr": "Problèmes résolus",
+      "ar": "المشاكل المحلولة"
+    },
+    "unsolved_issues_empty": {
+      "en": "You have no unsolved issues",
+      "fr": "Vous n'avez pas de problèmes non résolus",
+      "ar": "ليس لديك مشاكل غير محلولة"
+    },
+    "solved_issues_empty_non_solved": {
+      "en": "You haven't solved any issue yet!",
+      "fr": "Vous n'avez pas de problèmes non résolus",
+      "ar": "لم تحل أي مشكلة بعد!"
+    },
+    "solved_issues_empty_non_solved_note": {
+      "en": "Move to Unsolved Issues page to find recent alerts.",
+      "fr": "Passez à la page des problèmes non résolus pour trouver des alertes récentes.",
+      "ar": "انتقل إلى صفحة المشكلات غير المحلولة للعثور على التنبيهات الحديثة."
+    },
+    "solved_issues_empty_no_issue": {
+      "en": "There are no alerts or issues!",
+      "fr": "Il n'y a pas d'alertes ni de problèmes!",
+      "ar": "لا توجد تنبيهات أو مشاكل!"
+    },
+    "alerts_fetch_error": {
+      "en": "Cannot fetch alerts, please refresh the page",
+      "fr": "Impossible de récupérer les alertes, veuillez actualiser la page",
+      "ar": "لا يمكن جلب التنبيهات، يرجى تحديث الصفحة"
+    },
+    "site_settings_preference": {
+      "en": "Site Preferences:",
+      "fr": "Préférences du site:",
+      "ar": "تفضيلات الموقع:"
+    },
+    "cameras_setup": {
+      "en": "Camera Setup:",
+      "fr": "Configuration de la caméra:",
+      "ar": "إعدادات الكاميرات:"
+    },
+    "user_access_settings": {
+      "en": "Users Access:",
+      "fr": "Accédez aux utilisateurs:",
+      "ar": "وصول المستخدمين:"
+    },
+    "camera_action_delete": {
+      "en": "Delete Camera",
+      "fr": "Supprimer la caméra",
+      "ar": "حذف الكاميرا"
+    },
+    "camera_actions_delete_confirm": {
+      "en": "Are you sure you want to delete this camera? ({camera.id})",
+      "fr": "Êtes-vous sûr de vouloir supprimer ce camera? ({camera.id})",
+      "ar": "هل أنت متأكد من أنك تريد حذف هذه الكاميرا؟ ({camera.id})"
+    },
+    "camera_deleted": {
+      "en": "Camera has been deleted successfully",
+      "fr": "La caméra a été supprimée avec succès",
+      "ar": "تم حذف الكاميرا بنجاح"
+    },
+    "camera_delete_error": {
+      "en": "Error deleting the camera, try again later",
+      "fr": "Erreur de suppression de la caméra, réessayez plus tard",
+      "ar": "خطأ في حذف الكاميرا، حاول مرة أخرى لاحقًا"
+    },
+    "add_user_access": {
+      "en": "Add User",
+      "fr": "Ajouter l'utilisateur",
+      "ar": "إضافة مستخدم"
+    },
+    "edit_user_access_title": {
+      "en": "Edit User Access",
+      "fr": "Modifier l'accès des utilisateurs",
+      "ar": "تعديل وصول المستخدم"
+    },
+    "submit_user_access": {
+      "en": "Edit Access",
+      "fr": "Modifier l'accès",
+      "ar": "تعديل الوصول"
+    },
+    "edit_user_access_note": {
+      "en": "ONLY selected accounts have access to this site.",
+      "fr": "Seuls les comptes sélectionnés ont accès à ce site.",
+      "ar": "فقط الحسابات المختارة لديها حق الوصول إلى هذا الموقع."
+    },
+    "user_access_action_remove": {
+      "en": "Remove Access",
+      "fr": "Supprimer l'accès",
+      "ar": "إزالة الوصول"
+    },
+    "user_access_action_remove_confirm": {
+      "en": "Are you sure you want to remove the site access from this user? ({user.name}), you can always still add them back",
+      "fr": "Êtes-vous sûr de vouloir supprimer l'accès du site de cet utilisateur? ({user.name}), vous pouvez toujours les ajouter",
+      "ar": "هل أنت متأكد من أنك تريد إزالة وصول الموقع من هذا المستخدم؟ ({user.name})، يمكنك دائمًا إضافتهم مرة أخرى"
+    },
+    "camera_settings": {
+      "en": "Camera Settings",
+      "fr": "Les paramètres de la caméra",
+      "ar": "إعدادات الكاميرا"
+    },
+    "camera_events_settings": {
+      "en": "Camera Events Settings",
+      "fr": "Paramètres des événements de la caméra",
+      "ar": "إعدادات أحداث الكاميرا"
+    },
+    "camera_details_settings": {
+      "en": "Camera Details",
+      "fr": "Détails de la caméra",
+      "ar": "تفاصيل الكاميرا"
+    },
+    "empty_user_access": {
+      "en": "This site has no users assigned",
+      "fr": "Ce site n'a aucun utilisateur attribué",
+      "ar": "هذا الموقع ليس لديه مستخدمون معينون"
+    },
+    "assigned_users": {
+      "en": "Assigned Users",
+      "fr": "Utilisateurs affectés",
+      "ar": "المستخدمون المعينون"
+    },
+    "installed_cameras": {
+      "en": "Installed Cameras",
+      "fr": "Caméras installées",
+      "ar": "الكاميرات المتوفرة"
+    },
+    "view_cameras": {
+      "en": "View Cameras",
+      "fr": "Afficher les caméras",
+      "ar": "مشاهدة الكاميرات"
+    },
+    "site_details": {
+      "en": "Site Details:",
+      "fr": "Détails du site",
+      "ar": "معلومات الموقع"
+    },
+    "enable_alerts": {
+      "en": "Enable Alerts",
+      "fr": "Activer les alertes",
+      "ar": "تفعيل الانذارات"
+    },
+    "on_motion_detection": {
+      "en": "On Motion Detection",
+      "fr": "Sur la détection de mouvement",
+      "ar": "عند رصد حركة"
+    },
+    "on_motion_detection_note": {
+      "en": "this event get triggered when a motion is detected",
+      "fr": "Cet événement est déclenché lorsqu'un mouvement est détecté",
+      "ar": "يتم تشغيل هذا الحدث عند اكتشاف الحركة"
+    },
+    "on_person_detection": {
+      "en": "On Person Detection",
+      "fr": "Sur la détection des personnes",
+      "ar": "عند رصد شخص"
+    },
+    "on_person_detection_note": {
+      "en": "this event get triggered when a human is detected",
+      "fr": "Cet événement est déclenché lorsqu'un humain est détecté",
+      "ar": "يتم تشغيل هذا الحدث عند اكتشاف وجود إنسان"
+    },
+    "on_fire_detection": {
+      "en": "On Fire Detection",
+      "fr": "Sur la détection des incendies",
+      "ar": "عند رصد شخص"
+    },
+    "on_fire_detection_note": {
+      "en": "this event get triggered when a fire is detected",
+      "fr": "Cet événement est déclenché lorsqu'un incendie est détecté",
+      "ar": "يتم تشغيل هذا الحدث عند اكتشاف وجود إنسان"
+    },
+    "on_ppe_detection": {
+      "en": "On PPE Detection",
+      "fr": "Sur la détection de PPE",
+      "ar": "عند رصد معدات"
+    },
+    "on_ppe_detection_note": {
+      "en": "On PPE Detection",
+      "fr": "Sur la détection de PPE",
+      "ar": "عند رصد معدات"
+    },
+    "on_licence_plate_detection": {
+      "en": "On Licence Plate Detection",
+      "fr": "Sur la détection de Plaque Immatriculation",
+      "ar": "عند رصد معدات"
+    },
+    "on_licence_plate_detection_note": {
+      "en": "this event get triggered when a licence plate is detected",
+      "fr": "Cet événement est déclenché lorsqu'une plaque immatriculation est détecté",
+      "ar": "يتم تشغيل هذا الحدث عند اكتشاف وجود إنسان"
+    },
+    "on_car_detection": {
+      "en": "On Car Detection",
+      "fr": "Sur la détection des Voitures",
+      "ar": "عند رصد معدات"
+    },
+    "on_car_detection_note": {
+      "en": "this event get triggered when a car is detected",
+      "fr": "Cet événement est déclenché lorsqu'un voiture est détecté",
+      "ar": "يتم تشغيل هذا الحدث عند اكتشاف وجود إنسان"
+    },
+    "record_duration_before_event": {
+      "en": "Record duration before event",
+      "fr": "Enregistrer la durée avant l'événement",
+      "ar": "مدة التسجيل قبل الحدث"
+    },
+    "record_duration_before_event_note": {
+      "en": "The record duration before the event is detected (seconds)",
+      "fr": "La durée du record avant la détection de l'événement (secondes)",
+      "ar": "مدة التسجيل قبل اكتشاف الحدث (بالثواني)"
+    },
+    "record_duration_after_event": {
+      "en": "Record duration after event",
+      "fr": "Enregistrer la durée après l'événement",
+      "ar": "مدة التسجيل بعد الحدث"
+    },
+    "record_duration_after_event_note": {
+      "en": "The record duration after the event is detected (seconds)",
+      "fr": "La durée d'enregistrement après la détection de l'événement (secondes)",
+      "ar": "مدة التسجيل بعد اكتشاف الحدث (بالثواني)"
+    },
+    "solve_alert": {
+      "en": "Solve Alert",
+      "fr": "marquer comme résolu",
+      "ar": "حل الانذار"
+    },
+    "unsolve_alert": {
+      "en": "Move to unsolved",
+      "fr": "Déplacer vers non résolu",
+      "ar": "نقل الى غير محلول"
+    },
+    "share_alert": {
+      "en": "Share alert link",
+      "fr": "Partager un lien d'alerte",
+      "ar": "مشاركة رابط التنبيه"
+    },
+    "copy_alert_id": {
+      "en": "Copy alert ID",
+      "fr": "Copier l'ID d'alerte",
+      "ar": "نسخ تعريف التنبيه"
+    },
+    "views_management": {
+      "en": "Views",
+      "fr": "Vues",
+      "ar": "العروض"
+    },
+    "no_view_found": {
+      "en": "No view has been found, wanna create your first view?",
+      "fr": "Aucune vue n'a été trouvée, vous voulez créer votre première vue?",
+      "ar": "لم يتم العثور على أي عرض، هل تريد إنشاء عرضك الأول؟"
+    },
+    "add_view": {
+      "en": "Create View",
+      "fr": "Créer une vue",
+      "ar": "إنشاء عرض"
+    },
+    "select_view": {
+      "en": "Select a view to start monitoring",
+      "fr": "Sélectionnez une vue pour commencer la surveillance",
+      "ar": "اختر عرضًا لبدء المراقبة"
+    },
+    "view_action_delete": {
+      "en": "Delete View",
+      "fr": "Supprimer le vue",
+      "ar": "حذف العرض"
+    },
+    "view_actions_delete_confirm": {
+      "en": "Are you sure you want to delete this view? ({view.id})",
+      "fr": "Êtes-vous sûr de vouloir supprimer cet vue? ({view.id})",
+      "ar": "هل أنت متأكد من أنك تريد حذف هذا العرض؟ ({view.id})"
+    },
+    "stream_thumbnail_load_error": {
+      "en": "Error loading thumbnail, click to start the stream",
+      "fr": "Erreur Chargement de vignettes, cliquez pour démarrer le flux",
+      "ar": "خطأ في تحميل الصورة المصغرة، انقر لبدء البث"
+    },
+    "create_view_title": {
+      "en": "Add New View",
+      "fr": "Ajouter Un Nouveau Vue",
+      "ar": "إضافة عرض جديد"
+    },
+    "create_view_note": {
+      "en": "Fill in the information below to add a new view",
+      "fr": "Remplissez les informations ci-dessous pour ajouter un nouveau vue",
+      "ar": "املأ المعلومات أدناه لإضافة عرض جديد"
+    },
+    "view_name": {
+      "en": "View Name",
+      "fr": "Nom de vue",
+      "ar": "اسم العرض"
+    },
+    "create_view": {
+      "en": "Create View",
+      "fr": "Créer une vue",
+      "ar": "إنشاء عرض"
+    },
+    "views_layout_editor": {
+      "en": "Layout Editor",
+      "fr": "Rédacteur en chef",
+      "ar": "محرر التخطيط"
+    },
+    "use_desktop_edit_view_layout": {
+      "en": "Please use a PC or a larger screen to edit view layout",
+      "fr": "Veuillez utiliser un PC ou un écran plus grand pour modifier la disposition de la vue",
+      "ar": "يرجى استخدام جهاز كمبيوتر أو شاشة أكبر لتحرير تخطيط العرض"
+    },
+    "search_views": {
+      "en": "Search Views",
+      "fr": "Vues de recherche",
+      "ar": "بحث في العروض"
+    },
+    "edit_view": {
+      "en": "Edit View",
+      "fr": "Modifier la vue",
+      "ar": "تحرير العرض"
+    },
+    "delete_view": {
+      "en": "Delete View",
+      "fr": "Supprimer la vue",
+      "ar": "حذف العرض"
+    },
+    "settings": {
+      "en": "Settings",
+      "fr": "Paramètres",
+      "ar": "الإعدادات"
+    },
+    "display_language_lolll": {
+      "en": "Display Language",
+      "fr": "Langue d'affichage",
+      "ar": "لغة العرض"
+    },
+    "display_language_note": {
+      "en": "Choose your preferred app language",
+      "fr": "Choisissez votre langue d'application préférée",
+      "ar": "اختر لغة التطبيق المفضلة لديك"
+    },
+    "app_theme": {
+      "en": "Theme",
+      "fr": "Thème",
+      "ar": "السمة"
+    },
+    "app_theme_note": {
+      "en": "Choose your preferred app Theme",
+      "fr": "Choisissez le thème préféré de votre application",
+      "ar": "اختر السمة المفضلة لديك"
+    },
+    "dark_theme": {
+      "en": "Dark Theme",
+      "fr": "Thème sombre",
+      "ar": "الوضع المضلم"
+    },
+    "light_theme": {
+      "en": "Light Theme",
+      "fr": "Thème clair",
+      "ar": "الوضع الفاتح"
+    },
+    "system_theme": {
+      "en": "System Theme",
+      "fr": "Thème du système",
+      "ar": "سمة النظام"
+    },
+    "preferences": {
+      "en": "Preferences",
+      "fr": "Préférences",
+      "ar": "التفضيلات"
+    },
+    "appearance": {
+      "en": "Appearance",
+      "fr": "Apparence",
+      "ar": "المظهر"
+    },
+    "accessibility": {
+      "en": "Accessibility",
+      "fr": "Accessibilité",
+      "ar": "إمكانية الوصول"
+    },
+    "notifications": {
+      "en": "Notifications",
+      "fr": "Notifications",
+      "ar": "الاشعارات"
+    },
+    "notification_sound": {
+      "en": "Notifications Sound",
+      "fr": "Les notifications SONN",
+      "ar": "رنة الاشعارات"
+    },
+    "notification_sound_note": {
+      "en": "Choose the sound of the notifications",
+      "fr": "Choisissez le son des notifications",
+      "ar": "اختر رنة الإشعارات"
+    },
+    "not_01": {
+      "en": "Notification 01",
+      "fr": "Notification 01",
+      "ar": "اشعار رقم 01"
+    },
+    "not_02": {
+      "en": "Notification 02",
+      "fr": "Notification 02",
+      "ar": "اشعار رقم 02"
+    },
+    "not_03": {
+      "en": "Notification 03",
+      "fr": "Notification 03",
+      "ar": "اشعار رقم 03"
+    },
+    "not_04": {
+      "en": "Notification 04",
+      "fr": "Notification 04",
+      "ar": "اشعار رقم 04"
+    },
+    "not_05": {
+      "en": "Notification 05",
+      "fr": "Notification 05",
+      "ar": "اشعار رقم 05"
+    },
+    "not_06": {
+      "en": "Notification 06",
+      "fr": "Notification 06",
+      "ar": "اشعار رقم 06"
+    },
+    "not_07": {
+      "en": "Notification 07",
+      "fr": "Notification 07",
+      "ar": "اشعار رقم 07"
+    },
+    "not_08": {
+      "en": "Notification 08",
+      "fr": "Notification 08",
+      "ar": "اشعار رقم 08"
+    },
+    "not_09": {
+      "en": "Notification 09",
+      "fr": "Notification 09",
+      "ar": "اشعار رقم 09"
+    },
+    "alert_notification_duration": {
+      "en": "Notification Duration (seconds)",
+      "fr": "Notification Duration (seconds) ",
+      "ar": "مدة الاشعار (بالثواني)"
+    },
+    "alert_notification_duration_note": {
+      "en": "Set the duration of the notification alerts",
+      "fr": "Définir la durée des alertes de notification",
+      "ar": "ضبط مدة التنبيهات الإشعارية"
+    },
+    "events": {
+      "en": "Events",
+      "fr": "Événements",
+      "ar": "التنبيهات"
+    },
+    "zones": {
+      "en": "Zones",
+      "fr": "Zones",
+      "ar": "المناطق"
+    },
+    "event_affected_polygons": {
+      "en": "Affected Zones",
+      "fr": "Zones affectées",
+      "ar": "الأشكال المعنية"
+    },
+    "event_affected_polygons_note": {
+      "en": "The selected Shapes will recieve alerts when the event is triggered inside them",
+      "fr": "The selected Shapes will recieve alerts when the event is triggered inside them",
+      "ar": "The selected Shapes will recieve alerts when the event is triggered inside them"
+    },
+    "stream_error": {
+      "en": "Failed to load camera live stream.",
+      "fr": "Échec du chargement du flux en direct de la caméra.",
+      "ar": "Failed to load camera live stream."
+    },
+    "stream_error_refresh": {
+      "en": "Please refresh, make sure camera is connected or double check the stream url.",
+      "fr": "Veuillez actualiser, vérifier que la caméra est connectée ou vérifier l'URL du flux.",
+      "ar": "Please refresh, make sure camera is connected or double check the stream url."
+    },
+    "retry": {
+      "en": "Retry",
+      "fr": "Réessayer",
+      "ar": "أعد المحاولة"
+    },
+    "sidebar_tab_sites": {
+      "en": "Sites",
+      "fr": "Sites",
+      "ar": "المواقع"
+    },
+    "sidebar_tab_alerts": {
+      "en": "Alerts",
+      "fr": "Alertes",
+      "ar": "التنبيهات"
+    },
+    "sidebar_tab_views": {
+      "en": "Views",
+      "fr": "Vues",
+      "ar": "العروض"
+    },
+    "sidebar_tab_map": {
+      "en": "Map",
+      "fr": "Carte",
+      "ar": "الخريطة"
+    },
+    "sidebar_tab_users": {
+      "en": "Users",
+      "fr": "Utilisateurs",
+      "ar": "المستخدمون"
+    },
+    "sidebar_tab_settings": {
+      "en": "Settings",
+      "fr": "Paramètres",
+      "ar": "الاعدادات"
+    },
+    "sidebar_tab_logout": {
+      "en": "Log out",
+      "fr": "Se déconnecter",
+      "ar": "تسجيل الخروج"
+    },
+    "sidebar_tab_logout_loading": {
+      "en": "Logging out",
+      "fr": "Déconnexion",
+      "ar": "تسجيل الخروج"
+    },
+    "en4": {
+      "en": "English",
+      "fr": "Anglais",
+      "ar": "الانجليزية",
+      "sq": "Anglisht"
+    },
+    "1fr": {
+      "en": "French",
+      "fr": "Français",
+      "ar": "الفرنسية",
+      "sq": "Frëngjisht"
+    },
+    "ar33": {
+      "en": "Arabicgggg",
+      "fr": "arabe",
+      "ar": "العربية",
+      "sq": "Arabisht"
+    },
+    "cancel333": {
+      "en": "Cancel",
+      "fr": "Annuler",
+      "ar": "إلغاء",
+      "sq": "Anulo"
+    }
+  }
+}

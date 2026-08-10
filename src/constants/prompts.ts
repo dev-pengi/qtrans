@@ -11,6 +11,34 @@ Output Format Compliance:
 Always provide responses strictly in raw JSON format.
 Do not use any markdown symbols, such as code blocks or backticks.
 Do not wrap the JSON object in any additional objects (e.g., {"en": ...}). Your response must be the raw JSON object containing the translations.
+
+Placeholder Preservation:
+
+Placeholders are immutable variables and MUST NEVER be translated, renamed, removed, reordered, or modified.
+
+Any placeholder written inside curly braces, such as {user.name}, {user.age}, {count}, or {user.address.city}, must appear exactly as written in every translated language.
+
+Preserve:
+- the exact placeholder name
+- the exact capitalization
+- the exact dots and underscores
+- the curly braces
+
+Examples:
+Input: "Hello {user.name}, you have {count} messages."
+French: "Bonjour {user.name}, vous avez {count} messages."
+Arabic: "مرحبًا {user.name}، لديك {count} رسائل."
+
+Do not translate placeholders:
+{user.name} → {user.name}
+NOT {user.name} → {nom.utilisateur}
+NOT {user.name} → {user.nom}
+
+Do not modify placeholder capitalization:
+{user.name} → {user.name}
+NOT {user.name} → {User.name}
+
+Do not remove placeholders even if the translated sentence can be written without them.
 Input
 You will be provided with:
 
@@ -71,7 +99,43 @@ Processing Rules (Step-by-Step):
    - If a language exists in 'providedValues', YOU MUST return that exact value.
    - Use 'providedValues' as a context anchor to ensure consistency for the other languages.
 
-4. **Formatting Protocol:**
+
+4. **Placeholder Preservation**:
+
+Placeholders are immutable variables.
+
+Any substring matching the placeholder format {name}, such as:
+- {user.name}
+- {user.age}
+- {count}
+- {user.address.city}
+
+MUST be copied exactly into every translated value.
+
+Never translate, rename, remove, or modify placeholders.
+
+The placeholder name, capitalization, dots, underscores, and curly braces must remain exactly unchanged.
+
+Example:
+
+English:
+"Hello {user.name}, you have {count} messages."
+
+French:
+"Bonjour {user.name}, vous avez {count} messages."
+
+Arabic:
+"مرحبًا {user.name}، لديك {count} رسائل."
+
+The following are invalid:
+"{nom.utilisateur}"
+"{user.nom}"
+"{User.name}"
+"{count} messages" → if {count} was removed or altered
+
+If a placeholder appears multiple times in the source value, preserve every occurrence in the translation.
+
+5. **Formatting Protocol:**
    - Output **ONLY** valid, raw JSON. 
    - Strict structure: { [iso_code]: string }
    - NO Markdown (no \`\`\`), NO preamble, NO explanations.

@@ -1,12 +1,12 @@
 import { faGears } from "@fortawesome/free-solid-svg-icons";
 import { FC, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { configureLanguages } from "src/api";
+import { configureLanguages, configureLLM } from "src/api";
 import { Button, Modal, MultiSelect, SelectMenu } from "src/components";
 import { languagesCodeMap } from "src/constants";
 import { useSettingsContext } from "src/contexts";
 import { useModalRef } from "src/hooks";
-import { AvailableProviders, Language } from "src/types";
+import { AvailableProviders, Language, Provider } from "src/types";
 import { fetchProviders } from "src/api";
 
 const SettingsConfiguration: FC = () => {
@@ -15,7 +15,7 @@ const SettingsConfiguration: FC = () => {
   const { config, setConfig } = useSettingsContext();
 
   const [defaultLanguage, setDefaultLanguage] = useState(
-    config.defaultLanguage
+    config.defaultLanguage,
   );
   const [selectedLanguages, setSelectedLanguages] = useState(config.languages);
 
@@ -27,38 +27,50 @@ const SettingsConfiguration: FC = () => {
   };
 
   const [providers, setProviders] = useState<AvailableProviders | null>(null);
-  const [selectedProvider, setSelectedProvider] = useState("gemini");
+  const [selectedProvider, setSelectedProvider] = useState<Provider>(
+    config.llm_config?.active_provider ?? "gemini");
 
   useEffect(() => {
-  const loadProviders = async () => {
-    try {
-      const data = await fetchProviders();
-      setProviders(data);
-      //console.log(data)
-      console.log(selectedProvider)
-    } catch (error) {
-      toast.error("Failed to load AI providers");
-    }
-  };
+    const loadProviders = async () => {
+      try {
+        const data = await fetchProviders();
+        setProviders(data);
+        //console.log(data)
+        console.log(selectedProvider);
+      } catch (error) {
+        toast.error("Failed to load AI providers");
+      }
+    };
 
-  loadProviders();
-}, [selectedProvider]);
+    loadProviders();
+  }, []);
 
-
-  const handleSave= async () => {
+const handleSave = async () => {
     setIsSaving(true);
     try {
       const data = {
         languages: selectedLanguages,
         defaultLanguage,
       };
-      await configureLanguages(data);
 
-      setConfig((prev) => ({ ...prev, ...data }));
+      await configureLanguages(data);
+      await configureLLM(selectedProvider);
+
+      //setConfig((prev) => ({ ...prev, ...data }));
+      setConfig((prev) => ({...prev,
+        ...data,
+        llm_config: prev.llm_config
+        ? {...prev.llm_config,
+          active_provider: selectedProvider,
+        }:{
+        active_provider: selectedProvider,
+        providers: {},
+      },
+}));
       configurationsModal.close();
-      toast.success("Languages Config has been updated");
+      toast.success(" Config has been updated");
     } catch (error) {
-      toast.error("Error while saving translation", error);
+      toast.error("Error while saving config");
       console.error(error);
     }
     setIsSaving(false);
@@ -138,25 +150,25 @@ const SettingsConfiguration: FC = () => {
             activeOptions={selectedLanguages}
             onSelect={(selectedLanguages) =>
               setSelectedLanguages(
-                selectedLanguages.map((lang) => lang.value as Language)
+                selectedLanguages.map((lang) => lang.value as Language),
               )
             }
           >
             {selectedLanguages.length} Language Selected
           </MultiSelect>
-         <SelectMenu
-              label="AI Provider"
-              options={
-                providers
-                  ? Object.entries(providers).map(([key, provider]) => ({
-                      value: key,
-                      label:  `${provider.name} - ${provider.model}`,
-                    }))
-                  : []
-              }
-              activeOption={selectedProvider}
-              onSelect={(option) => setSelectedProvider(option.value)}
-            />
+          <SelectMenu
+            label="AI Provider"
+            options={
+              providers
+                ? Object.entries(providers).map(([key, provider]) => ({
+                    value: key,
+                    label: `${provider.name} - ${provider.model}`,
+                  }))
+                : []
+            }
+            activeOption={selectedProvider}
+            onSelect={(option) => setSelectedProvider(option.value as Provider)}
+          />
         </div>
       </Modal>
     </>

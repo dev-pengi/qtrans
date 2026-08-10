@@ -4,6 +4,7 @@ import * as fs from "fs";
 import kleur from "kleur";
 import { Config, Provider } from "../types";
 import { AVAILABLE_PROVIDERS } from "../providers/provider.config";
+import { extractPlaceholders, placeholdersToTupleType } from "../utils/placeholder.util";
 
 
 export let rootDir: string | undefined = undefined;
@@ -95,7 +96,18 @@ export let mutableLanguagesConfig: TranslationSchema = {
 };
 
 export const generateTypes = () => {
-  const typeDefs = `
+    const translationVariablesEntries = Object.entries(
+    mutableLanguagesConfig.translations
+  )
+    .map(([key, langs]) => {
+      const defaultStr = langs[mutableLanguagesConfig.defaultLanguage] || "";
+      const names = extractPlaceholders(defaultStr);
+     return `  "${key}": ${placeholdersToTupleType(names)};`;
+    })
+    .join("\n");
+
+
+     const typeDefs = `
 // THIS FILE IS AUTO GENERATED, DO NOT MODIFY MANUALLY.
 
 export type Language = ${
@@ -117,6 +129,14 @@ export type TranslationKey = ${
   };
 
 export type Translations = Record<TranslationKey, Record<Language, string>>;
+
+export type TranslationVariables = {
+${
+  translationVariablesEntries.length > 0
+    ? translationVariablesEntries
+    : "  [key: string]: Record<string, never>;"
+}
+};
 
 export interface TranslationFileSchema {
   languages: Language[];
