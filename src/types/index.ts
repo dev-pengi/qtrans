@@ -25,3 +25,7 @@ export type Config = ConfigBase &
     typeSafe?: boolean;
     llm_config?: LLMConfig;
   }>;
+
+
+
+export type TranslationsFileMode = "single" | "separate"

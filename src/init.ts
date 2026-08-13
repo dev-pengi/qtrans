@@ -79,11 +79,49 @@ export default async function init() {
       message:
         "Do you want the dictionary to be type safe? ( automatically generate and export types)",
       default: false,
-    },
+    },   //prompt to choose a provider and enter api keu
+    {
+    type: "list",
+    name: "provider",
+    message: `Which AI provider do you want to use?`,
+    choices: Object.entries(AVAILABLE_PROVIDERS).map(([key, p]) => ({
+      name: key === DEFAULT_PROVIDER ? `${p.name} (default)` : p.name,
+      value: key,
+    })),
+    default: DEFAULT_PROVIDER,
+  },
+  {
+    type: "input",
+    name: "model",
+    message: (ans: any) =>
+      `Model to use? (default: ${AVAILABLE_PROVIDERS[ans.provider as Provider].model})`,
+    default: (ans: any) => AVAILABLE_PROVIDERS[ans.provider as Provider].model,
+  },
+  {
+    type: "input",
+    name: "envVar",
+    message: "Enter the environment variable name for your API key:",
+    default: (ans: any) => `API_KEY_${String(ans.provider).toUpperCase()}`,
+  }, // prompt to choose langs file management 
+  {
+    type: "list",
+    name: "TranslationsFileMode",
+    message: "How do you want to store your translations?",
+    choices: [
+      {
+        name: "Single file: langs.json",
+        value: "single",
+      },
+      {
+        name: "Separate file for each language (eg: en.json fr.json)",
+        value: "separate",
+      },
+    ],
+  }
   ]);
 
   //prompt to choose a provider and enter api keu
-  const providerAnswers = await inquirer.prompt([
+  /*const providerAnswers = await inquirer.prompt([
   {
     type: "list",
     name: "provider",
@@ -107,8 +145,10 @@ export default async function init() {
     message: "Enter the environment variable name for your API key:",
     default: (ans: any) => `API_KEY_${String(ans.provider).toUpperCase()}`,
   },
-]);
+]);*/
 
+
+// prompt to choose file management setup: one glabal file => no chnages at all or separate files => langs.json for metadata then a en.json file created as english is the default language  
 
 
 
@@ -118,8 +158,9 @@ export default async function init() {
   console.log(kleur.yellow(`Type Safe: `), answers.typeSafe ? "Yes" : "No");
   console.log(
   kleur.yellow(`AI Provider: `),
-  `${AVAILABLE_PROVIDERS[providerAnswers.provider as Provider].name} (${providerAnswers.model})`
+  `${AVAILABLE_PROVIDERS[answers.provider as Provider].name} (${answers.model})`
 );
+  console.log(kleur.yellow(`Translation File Mode:`), answers.TranslationsFileMode === "single" ? "Single File": "Separate file per language" )
 
   const confirm = await inquirer.prompt([
     {
@@ -139,7 +180,7 @@ export default async function init() {
   const setupDirectory = path.resolve(currentDir, answers.setup_directory);
   try {
     ensureDirectoryExists(setupDirectory);
-    const TranslationsFileName = `langs.json`;
+  /*  const TranslationsFileName = `langs.json`;
     const defaultLangsConfig = {
       languages: ["en"],
       defaultLanguage: "en",
@@ -149,7 +190,34 @@ export default async function init() {
     fs.writeFileSync(
       path.join(setupDirectory, TranslationsFileName),
       JSON.stringify(defaultLangsConfig, null, 2)
+    );*/
+    const defaultLanguage = "en";
+    const TranslationsFileName = `langs.json`
+    if(answers.TranslationsFileMode === "single"){
+      const defaultLangsConfig = {
+      languages: [defaultLanguage],
+      defaultLanguage: defaultLanguage,
+      translations: {},
+    };
+    fs.writeFileSync(
+      path.join(setupDirectory, TranslationsFileName),
+      JSON.stringify(defaultLangsConfig, null, 2)
     );
+    }else{
+       const metadataConfig = {
+      languages: [defaultLanguage],
+      defaultLanguage: defaultLanguage,
+    };
+      fs.writeFileSync(
+      path.join(setupDirectory, TranslationsFileName),
+      JSON.stringify(metadataConfig, null, 2)
+    );
+
+    fs.writeFileSync(
+      path.join(setupDirectory , `${defaultLanguage}.json`),
+      JSON.stringify({}, null , 2)
+    )
+    }
     console.log(kleur.green(`Directory created: ${setupDirectory}`));
   } catch (error: any) {
     console.error(kleur.red(`Error: ${error.message}`));
@@ -165,12 +233,13 @@ export default async function init() {
   location: answers.setup_directory,
   port: 6757,
   typeSafe: answers.typeSafe,
+  translationFileMode: answers.TranslationsFileMode,
   llm_config: {
-  active_provider: providerAnswers.provider,
+  active_provider: answers.provider,
   providers: {
-    [providerAnswers.provider]: {
-      model: providerAnswers.model,
-      api_key:`ENV.{{${providerAnswers.envVar}}}`
+    [answers.provider]: {
+      model: answers.model,
+      api_key:`ENV.{{${answers.envVar}}}`
     }
   }
 }
