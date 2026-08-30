@@ -7,6 +7,8 @@ import { AVAILABLE_PROVIDERS } from "../providers/provider.config";
 import { extractPlaceholders, placeholdersToTupleType } from "../utils/placeholder.util";
 
 
+
+
 export let rootDir: string | undefined = undefined;
 export let updateRootDir = (dir: string) => {
   rootDir = dir;
@@ -335,25 +337,6 @@ export const setLanguages = ({
   }));
 };
 
-
-
-/*
-export const setLLMProvider = (provider: Provider) =>{
-
-  updateConfig((prev)=>{
-    if(!prev.llm_config){
-      throw new Error('LLM config is missing')
-    }
-
-    return{
-      ...prev , 
-      llm_config:{
-        ...prev.llm_config, 
-        active_provider: provider
-      }
-    }
-  })
-}*/
 
 export const setLLMProvider = (provider: Provider) => {
   if (!rootDir) {

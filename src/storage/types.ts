@@ -1,0 +1,1 @@
+export type FilePartition = Record<string, unknown>;

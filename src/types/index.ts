@@ -24,4 +24,9 @@ export type Config = ConfigBase &
   Partial<{
     typeSafe?: boolean;
     llm_config?: LLMConfig;
+    translationFileMode?: TranslationsFileMode
   }>;
+
+
+
+export type TranslationsFileMode = "single" | "separate"
