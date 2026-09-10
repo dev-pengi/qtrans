@@ -5,8 +5,7 @@ import kleur from "kleur";
 import { Config, Provider } from "../types";
 import { AVAILABLE_PROVIDERS } from "../providers/provider.config";
 import { extractPlaceholders, placeholdersToTupleType } from "../utils/placeholder.util";
-
-
+import { saveTranslations, loadTranslations } from "../storage";
 
 
 export let rootDir: string | undefined = undefined;
@@ -162,33 +161,36 @@ export interface TranslationFileSchema {
   }
 };
 
-export let updateMutableLanguagesConfig = (
-  callback: (
-    prev: typeof mutableLanguagesConfig
-  ) => void | typeof mutableLanguagesConfig
-) => {
-  mutableLanguagesConfig =
-    callback(mutableLanguagesConfig) || mutableLanguagesConfig;
+
+
+export let updateMutableLanguagesConfig = (callback:(
+  prev : typeof mutableLanguagesConfig 
+)=> void | typeof mutableLanguagesConfig) => {
+  mutableLanguagesConfig = callback(mutableLanguagesConfig) || mutableLanguagesConfig;
 
   if (rootDir && config.location) {
     const dirPath = path.join(rootDir, config.location);
-    if (!fs.existsSync(dirPath)) {
-      fs.mkdirSync(dirPath, { recursive: true });
-    }
-
-    fs.writeFileSync(
-      path.join(dirPath, "langs.json"),
-      JSON.stringify(mutableLanguagesConfig, null, 2)
-    );
+    saveTranslations(dirPath, mutableLanguagesConfig, config.translationFileMode ?? "single");
   }
 
   generateTypes();
 };
 
+export const loadLanguagesConfig = () => {
+  if (!rootDir || !config.location) return;
+  const dirPath = path.join(rootDir, config.location);
+  const mode = config.translationFileMode ?? "single";
+
+  mutableLanguagesConfig = loadTranslations(dirPath, mode);
+  saveTranslations(dirPath, mutableLanguagesConfig, mode); 
+
+  generateTypes();
+};
+/*
 export const initLanguagesConfig = (config: any) => {
   mutableLanguagesConfig = config;
   generateTypes();
-};
+};*/
 
 export const getLanguagesConfig = () => {
   return mutableLanguagesConfig;

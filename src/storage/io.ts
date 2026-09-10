@@ -13,5 +13,7 @@ export const writePartition = (dirPath: string, files: FilePartition): void => {
 
 export const readJsonFile = <T>(filePath: string, fallback: T): T => {
   if (!fs.existsSync(filePath)) return fallback;
-  return JSON.parse(fs.readFileSync(filePath, "utf-8"));
+  const content = fs.readFileSync(filePath, "utf-8");
+  if (!content.trim().length) return fallback;
+  return JSON.parse(content); 
 };
