@@ -120,36 +120,6 @@ export default async function init() {
   }
   ]);
 
-  //prompt to choose a provider and enter api keu
-  /*const providerAnswers = await inquirer.prompt([
-  {
-    type: "list",
-    name: "provider",
-    message: `Which AI provider do you want to use?`,
-    choices: Object.entries(AVAILABLE_PROVIDERS).map(([key, p]) => ({
-      name: key === DEFAULT_PROVIDER ? `${p.name} (default)` : p.name,
-      value: key,
-    })),
-    default: DEFAULT_PROVIDER,
-  },
-  {
-    type: "input",
-    name: "model",
-    message: (ans: any) =>
-      `Model to use? (default: ${AVAILABLE_PROVIDERS[ans.provider as Provider].model})`,
-    default: (ans: any) => AVAILABLE_PROVIDERS[ans.provider as Provider].model,
-  },
-  {
-    type: "input",
-    name: "envVar",
-    message: "Enter the environment variable name for your API key:",
-    default: (ans: any) => `API_KEY_${String(ans.provider).toUpperCase()}`,
-  },
-]);*/
-
-
-// prompt to choose file management setup: one glabal file => no chnages at all or separate files => langs.json for metadata then a en.json file created as english is the default language  
-
 
 
   console.log("\nYou have selected the following options:");
@@ -180,17 +150,6 @@ export default async function init() {
   const setupDirectory = path.resolve(currentDir, answers.setup_directory);
   try {
     ensureDirectoryExists(setupDirectory);
-  /*  const TranslationsFileName = `langs.json`;
-    const defaultLangsConfig = {
-      languages: ["en"],
-      defaultLanguage: "en",
-      translations: {},
-    };
-
-    fs.writeFileSync(
-      path.join(setupDirectory, TranslationsFileName),
-      JSON.stringify(defaultLangsConfig, null, 2)
-    );*/
     const defaultLanguage = "en";
     const TranslationsFileName = `langs.json`
     if(answers.TranslationsFileMode === "single"){

@@ -1,14 +1,12 @@
 import dotenv from "dotenv";
 import path from "path";
 import express from "express";
-import * as fs from "fs";
 import kleur from "kleur";
 import translationsRouter from "./routes/translations";
 import { errorHandler, notFound } from "./middlewares/error.middleware";
 import {
   config,
-  initLanguagesConfig,
-  mutableLanguagesConfig,
+  loadLanguagesConfig,
   rootDir,
   updateRootDir,
 } from "./config";
@@ -42,56 +40,18 @@ export default async function startServer(options: ServerOptions) {
   if (!rootDir) return;
   checkConfigFile();
 
-  const dirPath = path.join(rootDir, config.location);
 
-  if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true });
-  }
-
-  if (fs.existsSync(path.join(dirPath, "langs.json"))) {
-    let langsConfig = fs.readFileSync(
-      path.join(dirPath, "langs.json"),
-      "utf-8"
-    );
-
-    if (!langsConfig || !langsConfig.trim().length) {
-      fs.writeFileSync(
-        path.join(dirPath, "langs.json"),
-        JSON.stringify(mutableLanguagesConfig, null, 2)
-      );
-      langsConfig = JSON.stringify(mutableLanguagesConfig, null, 2);
-
-      console.log(
-        kleur.yellow(
-          "langs.json file is empty, creating a new one with empty langs config."
-        )
-      );
-    }
-
-    try {
-      const parsedLangsConfig = JSON.parse(langsConfig);
-      initLanguagesConfig(parsedLangsConfig);
-    } catch (error) {
-      console.log(
-        kleur.red(
-          "Error reading langs.json file. please make sure it is a valid JSON file."
-        )
-      );
-      console.log(kleur.red("Exiting the process."));
-      process.exit(1);
-    }
-  } else {
-    fs.writeFileSync(
-      path.join(dirPath, "langs.json"),
-      JSON.stringify(mutableLanguagesConfig, null, 2)
-    );
-
-    console.log(
-      kleur.yellow(
-        "langs.json file not found, creating a new one with empty langs config."
-      )
-    );
-  }
+      try {
+        loadLanguagesConfig();
+      } catch (error) {
+        console.log(
+          kleur.red(
+            "Error reading translation files. please make sure they are valid JSON files."
+          )
+        );
+        console.log(kleur.red("Exiting the process."));
+        process.exit(1);
+      }
 
   const app = express();
 
