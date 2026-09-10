@@ -365,7 +365,7 @@ export const setLLMProvider = (provider: Provider) => {
 
         // preserve existing settings if already configured.
         [provider]: existingProviders[provider] ?? {
-          model: providerDefaults.model,
+          model: providerDefaults.models,
           api_key: `ENV.{{${providerDefaults.envVar}}}`,
         },
       },

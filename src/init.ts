@@ -91,11 +91,11 @@ export default async function init() {
     default: DEFAULT_PROVIDER,
   },
   {
-    type: "input",
+    type: "list",
     name: "model",
     message: (ans: any) =>
-      `Model to use? (default: ${AVAILABLE_PROVIDERS[ans.provider as Provider].model})`,
-    default: (ans: any) => AVAILABLE_PROVIDERS[ans.provider as Provider].model,
+      `Model to use? (default: ${AVAILABLE_PROVIDERS[ans.provider as Provider].models})`,
+    default: (ans: any) => AVAILABLE_PROVIDERS[ans.provider as Provider].models,
   },
   {
     type: "input",
