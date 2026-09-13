@@ -339,7 +339,7 @@ export const setLanguages = ({
   }));
 };
 
-
+/*
 export const setLLMProvider = (provider: Provider) => {
   if (!rootDir) {
     throw new Error("Root directory is missing.");
@@ -375,5 +375,59 @@ export const setLLMProvider = (provider: Provider) => {
   saveRawConfig(updatedConfig);
 
   // Update the runtime config as well.
+  updateConfig(() => updatedConfig);
+};*/
+
+export const setLLMProvider = (
+  provider: Provider,
+  model?: string
+) => {
+  if (!rootDir) {
+    throw new Error("Root directory is missing.");
+  }
+
+  const configFilePath = path.join(rootDir, "qtrans.config.json");
+
+  const rawConfig = JSON.parse(
+    fs.readFileSync(configFilePath, "utf-8")
+  ) as Config;
+
+  const providerDefaults = AVAILABLE_PROVIDERS[provider];
+
+  if (!providerDefaults) {
+    throw new Error(`Unknown provider "${provider}"`);
+  }
+
+  const existingProviders = rawConfig.llm_config?.providers ?? {};
+
+  const existingProvider = existingProviders[provider];
+
+  const updatedConfig: Config = {
+    ...rawConfig,
+    llm_config: {
+      active_provider: provider,
+      prompt_strategy: rawConfig.llm_config?.prompt_strategy,
+
+      providers: {
+        ...existingProviders,
+
+        [provider]: {
+          ...existingProvider,
+
+          model:
+            model ??
+            existingProvider?.model ??
+            providerDefaults.models[0],
+
+          api_key:
+            existingProvider?.api_key ??
+            `ENV.{{${providerDefaults.envVar}}}`,
+        },
+      },
+    },
+  };
+
+  saveRawConfig(updatedConfig);
+
   updateConfig(() => updatedConfig);
 };
