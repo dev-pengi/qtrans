@@ -21,5 +21,6 @@ export const languagesValidator = Joi.object({
 export const llmValidator = Joi.object({
   active_provider: Joi.string()
   .valid("gemini", "openai", "anthropic")
-  .required()
+  .required(),
+  model: Joi.string().required(),
 })

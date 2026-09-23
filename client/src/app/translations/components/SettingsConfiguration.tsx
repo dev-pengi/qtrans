@@ -30,6 +30,26 @@ const SettingsConfiguration: FC = () => {
   const [selectedProvider, setSelectedProvider] = useState<Provider>(
     config.llm_config?.active_provider ?? "gemini");
 
+  const [selectedModel, setSelectedModel] = useState(
+  config.llm_config?.providers?.[selectedProvider]?.model ?? ""
+);
+
+
+/*useEffect(() => {
+  if (!providers) return;
+
+  const provider = providers[selectedProvider];
+
+  console.log("selected provider:", selectedProvider);
+  console.log("provider:", provider);
+  console.log("models:", provider?.models);
+  console.log("old model:", selectedModel);
+
+  if (provider?.models?.length) {
+    setSelectedModel(provider.models[0]);
+  }
+}, [selectedProvider, providers]);*/
+
   useEffect(() => {
     const loadProviders = async () => {
       try {
@@ -45,6 +65,33 @@ const SettingsConfiguration: FC = () => {
     loadProviders();
   }, []);
 
+ /* useEffect(() => {
+  if (!providers) return;
+
+  const provider = providers[selectedProvider];
+
+  if (provider?.models?.length) {
+    setSelectedModel(provider.models[0]);
+  }
+}, [selectedProvider, providers]);*/
+
+useEffect(() => {
+  if (!providers) return;
+
+  const availableModels = providers[selectedProvider]?.models;
+
+  if (!availableModels?.length) return;
+
+  const configuredModel =
+    config.llm_config?.providers?.[selectedProvider]?.model;
+
+  setSelectedModel(
+    configuredModel && availableModels.includes(configuredModel)
+      ? configuredModel
+      : availableModels[0]
+  );
+}, [selectedProvider, providers]);
+
 const handleSave = async () => {
     setIsSaving(true);
     try {
@@ -54,7 +101,7 @@ const handleSave = async () => {
       };
 
       await configureLanguages(data);
-      await configureLLM(selectedProvider);
+      await configureLLM(selectedProvider , selectedModel);
 
       //setConfig((prev) => ({ ...prev, ...data }));
       setConfig((prev) => ({...prev,
@@ -157,18 +204,31 @@ const handleSave = async () => {
             {selectedLanguages.length} Language Selected
           </MultiSelect>
           <SelectMenu
-            label="AI Provider"
-            options={
-              providers
-                ? Object.entries(providers).map(([key, provider]) => ({
-                    value: key,
-                    label: `${provider.name} - ${provider.model}`,
-                  }))
-                : []
-            }
-            activeOption={selectedProvider}
-            onSelect={(option) => setSelectedProvider(option.value as Provider)}
-          />
+  label="AI Provider"
+  options={
+    providers
+      ? Object.entries(providers).map(([key, provider]) => ({
+          value: key,
+          label: provider.name,
+        }))
+      : []
+  }
+  activeOption={selectedProvider}
+  onSelect={(option) =>
+    setSelectedProvider(option.value as Provider)
+  }
+/>
+<SelectMenu
+  label="AI Model"
+options={
+  providers?.[selectedProvider]?.models?.map((model) => ({
+    value: model,
+    label: model,
+  })) ?? []
+}
+  activeOption={selectedModel}
+  onSelect={(option) => setSelectedModel(option.value)}
+/>
         </div>
       </Modal>
     </>

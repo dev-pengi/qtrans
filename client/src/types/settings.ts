@@ -16,7 +16,7 @@ export type Provider = "gemini" | "openai" | "anthropic";
 
 export type AvailableProvider = {
   name: string;
-  model: string;
+  models: string[];
 };
 
 export type AvailableProviders = Record<

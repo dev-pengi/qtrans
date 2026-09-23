@@ -42,9 +42,9 @@ export const configureLLM = asyncHandler(
       throw new Error(validation.error.message);
     }
 
-    const { active_provider } = req.body;
+    const { active_provider , model } = req.body;
 
-    setLLMProvider(active_provider);
+    setLLMProvider(active_provider, model);
 
     res.sendStatus(200);
   }

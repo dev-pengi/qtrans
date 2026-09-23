@@ -19,12 +19,13 @@ export const configureLanguages = async (
 
 
 export const configureLLM = async (
-  active_provider: Provider
+  active_provider: Provider , model: string
 ): Promise<void> => {
   return handleFetch("/api/settings/llm", {
     method: "PUT",
     data: {
       active_provider,
+      model
     },
   });
 };

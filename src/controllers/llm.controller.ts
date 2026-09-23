@@ -13,7 +13,7 @@ export const getProvider = asyncHandler(
       const providers = Object.fromEntries(Object.entries(AVAILABLE_PROVIDERS).map(([key , value])=>[
         key, {
           name: value.name,
-          model : value.model
+          models : value.models
         }
       ]))
       res.json(providers)

@@ -17,6 +17,7 @@ import {
 import { AI_PROMPTS } from "../constants/prompts";
 import { createProvider } from "../providers/provider.factory";
 import { validatePlaceholders } from "../validators/placeholder.validator";
+import { AVAILABLE_PROVIDERS } from "../providers/provider.config";
 
 
 export const fetchAllTranslations = asyncHandler(
@@ -158,7 +159,17 @@ export const generateTranslations = asyncHandler(
   return;
 }
 
-const providerSettings = llmConfig.providers[llmConfig.active_provider];
+const provider = llmConfig.active_provider;
+
+// Check provider
+if (!(provider in AVAILABLE_PROVIDERS)) {
+  res.status(400).send(
+    `Unknown provider "${provider}"`
+  );
+  return;
+}
+
+const providerSettings = llmConfig.providers[provider];
 
    if (!providerSettings || !providerSettings.api_key) {
       res
@@ -168,6 +179,14 @@ const providerSettings = llmConfig.providers[llmConfig.active_provider];
         );
       return;
     }
+
+    // Check model
+if (!(AVAILABLE_PROVIDERS[provider].models as readonly string[]).includes(providerSettings.model)) {
+  res.status(400).send(
+    `Model "${providerSettings.model}" is not available for provider "${provider}"`
+  );
+  return;
+}
 
 
     if (!llmConfig.prompt_strategy)
