@@ -5,7 +5,7 @@ export type ConfigBase = {
 };
 
 
-export type Provider = "openai" | "gemini" | "anthropic"
+export type Provider = "openai" | "gemini" | "anthropic" | "deepseek"
 
 export type ProviderSettings = {
   model: string;
